@@ -335,6 +335,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pages_ItemPurchasePage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pages/ItemPurchasePage */ "./src/views/pages/ItemPurchasePage.js");
 /* harmony import */ var _pages_NotFoundPage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pages/NotFoundPage */ "./src/views/pages/NotFoundPage.js");
 /* harmony import */ var _components_NavBar__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/NavBar */ "./src/views/components/NavBar.js");
+/* harmony import */ var _configs_constants__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../configs/constants */ "./src/configs/constants.ts");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -356,6 +357,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
 
 
 
@@ -379,7 +381,7 @@ var App = /*#__PURE__*/function (_Component) {
   _createClass(App, [{
     key: "template",
     value: function template() {
-      return "\n      <main class=\"app-container\">\n        <header>\n          <h1 class=\"title\">\uD83C\uDF7F \uC790\uD310\uAE30 \uD83C\uDF7F</h1>\n        </header>\n        <nav-bar class=\"nav-bar\"></nav-bar>\n        <div class=\"page-container\">\n          <page-router>\n            <item-management class=\"page\" path=\"#item-management\"></item-management>\n            <change-charge class=\"page\" path=\"#change-charge\"></change-charge>\n            <item-purchase class=\"page\" path=\"#item-purchase\"></item-purchase>\n            <not-found class=\"page\" path=\"*\"></not-found>\n          </page-router>\n        </div>\n      </main>\n    ";
+      return "\n      <main class=\"app-container\">\n        <header>\n          <h1 class=\"title\">\uD83C\uDF7F \uC790\uD310\uAE30 \uD83C\uDF7F</h1>\n        </header>\n        <nav-bar class=\"nav-bar\"></nav-bar>\n        <div class=\"page-container\">\n          <page-router>\n            <item-management class=\"page\" path=\"".concat(_configs_constants__WEBPACK_IMPORTED_MODULE_7__.PAGES.ITEM_MANAGEMENT.PATH, "\"></item-management>\n            <change-charge class=\"page\" path=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_7__.PAGES.CHANGE_CHARGE.PATH, "\"></change-charge>\n            <item-purchase class=\"page\" path=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_7__.PAGES.ITEM_PURCHASE.PATH, "\"></item-purchase>\n            <not-found class=\"page\" path=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_7__.PAGES.DEFAULT.PATH, "\"></not-found>\n          </page-router>\n        </div>\n      </main>\n    ");
     }
   }]);
 
@@ -399,6 +401,8 @@ customElements.define('app-wrapper', App);
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core_Component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/Component */ "./src/core/Component.js");
+/* harmony import */ var _utils_domUtils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/domUtils */ "./src/utils/domUtils.ts");
+/* harmony import */ var _configs_constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../configs/constants */ "./src/configs/constants.ts");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -423,6 +427,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
+
 var Router = /*#__PURE__*/function (_Component) {
   _inherits(Router, _Component);
 
@@ -437,8 +443,6 @@ var Router = /*#__PURE__*/function (_Component) {
   _createClass(Router, [{
     key: "setup",
     value: function setup() {
-      var href = window.location.href;
-      var location = new URL(href).hash;
       var routes = Array.from(this.children).map(function (child) {
         return {
           path: child.getAttribute('path'),
@@ -446,18 +450,18 @@ var Router = /*#__PURE__*/function (_Component) {
         };
       });
       this.state = {
-        location: location,
-        routes: routes
+        routes: routes,
+        location: (0,_utils_domUtils__WEBPACK_IMPORTED_MODULE_1__.getHash)()
       };
     }
   }, {
     key: "render",
     value: function render() {
       var _this$state = this.state,
-          location = _this$state.location,
-          routes = _this$state.routes;
+          routes = _this$state.routes,
+          location = _this$state.location;
       var currentRoute = routes.filter(function (route) {
-        return route.path === location || route.path === '*';
+        return route.path === location || route.path === _configs_constants__WEBPACK_IMPORTED_MODULE_2__.PAGES.DEFAULT.PATH;
       })[0];
       var component = location === '' && routes[0].component || (currentRoute === null || currentRoute === void 0 ? void 0 : currentRoute.component);
       this.clearDOM();
@@ -469,11 +473,8 @@ var Router = /*#__PURE__*/function (_Component) {
       var _this = this;
 
       window.addEventListener('hashchange', function (event) {
-        var href = event.target.location.href;
-        var location = new URL(href).hash;
-
         _this.setState({
-          location: location
+          location: (0,_utils_domUtils__WEBPACK_IMPORTED_MODULE_1__.getHash)(event.target)
         });
       });
     }
@@ -495,6 +496,7 @@ customElements.define('page-router', Router);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core_TableRow__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../core/TableRow */ "./src/core/TableRow.js");
 /* harmony import */ var _domains_VendingMachine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../domains/VendingMachine */ "./src/domains/VendingMachine.ts");
+/* harmony import */ var _configs_constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../configs/constants */ "./src/configs/constants.ts");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -516,6 +518,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
 
 
 
@@ -546,7 +549,7 @@ var ItemRow = /*#__PURE__*/function (_TableRow) {
           price = _this$props.price,
           quantity = _this$props.quantity;
       var isEditing = this.state.isEditing;
-      return "\n       ".concat(isEditing ? "\n            <td class=\"item-name styled-td\">\n              <input\n                value=\"".concat(name, "\"\n                class=\"item-name-edit-input transparent-input\"\n                type=\"text\"\n                maxlength=\"10\"\n              >\n            </td>\n            <td class=\"item-price styled-td\">\n              <input\n                value=\"").concat(price, "\"\n                class=\"item-price-edit-input transparent-input\"\n                type=\"number\"\n                step=\"10\"\n                min=\"100\"\n                max=\"10000\"\n              >\n            </td>\n            <td class=\"item-quantity styled-td\">\n              <input\n                value=\"").concat(quantity, "\"\n                class=\"item-quantity-edit-input transparent-input\"\n                type=\"number\"\n                step=\"1\"\n                min=\"1\"\n                max=\"20\"\n              >\n            </td>\n            <td class=\"item-button-container\">\n              <button class=\"item-update-button styled-button\">\uC644\uB8CC</button>\n            </td>\n          ") : "\n            <td class=\"item-name styled-td\">".concat(name, "</td>\n            <td class=\"item-price styled-td\">").concat(price, "</td>\n            <td class=\"item-quantity styled-td\">").concat(quantity, "</td>\n            <td class=\"item-button-container\">\n              <button class=\"item-edit-button styled-button\" type=\"button\">\uC218\uC815</button>\n              <button class=\"item-remove-button styled-button\" type=\"button\">\uC0AD\uC81C</button>\n            </td>\n          "), "\n    ");
+      return "\n       ".concat(isEditing ? "\n            <td class=\"item-name styled-td\">\n              <input\n                value=\"".concat(name, "\"\n                class=\"item-name-edit-input transparent-input\"\n                type=\"text\"\n                maxlength=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_2__.ITEM.NAME.LENGTH.MAX, "\"\n              >\n            </td>\n            <td class=\"item-price styled-td\">\n              <input\n                value=\"").concat(price, "\"\n                class=\"item-price-edit-input transparent-input\"\n                type=\"number\"\n                min=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_2__.ITEM.PRICE.MIN, "\"\n                max=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_2__.ITEM.PRICE.MAX, "\"\n                step=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_2__.ITEM.PRICE.STEP, "\"\n              >\n            </td>\n            <td class=\"item-quantity styled-td\">\n              <input\n                value=\"").concat(quantity, "\"\n                class=\"item-quantity-edit-input transparent-input\"\n                type=\"number\"\n                step=\"1\"\n                min=\"1\"\n                max=\"20\"\n              >\n            </td>\n            <td class=\"item-button-container\">\n              <button class=\"item-update-button styled-button\">\uC644\uB8CC</button>\n            </td>\n          ") : "\n            <td class=\"item-name styled-td\">".concat(name, "</td>\n            <td class=\"item-price styled-td\">").concat(price, "</td>\n            <td class=\"item-quantity styled-td\">").concat(quantity, "</td>\n            <td class=\"item-button-container\">\n              <button class=\"item-edit-button styled-button\" type=\"button\">\uC218\uC815</button>\n              <button class=\"item-remove-button styled-button\" type=\"button\">\uC0AD\uC81C</button>\n            </td>\n          "), "\n    ");
     }
   }, {
     key: "setEvent",
@@ -562,8 +565,8 @@ var ItemRow = /*#__PURE__*/function (_TableRow) {
 
         input.focus();
         setTimeout(function () {
-          input.selectionStart = 10000;
-          input.selectionEnd = 10000;
+          input.selectionStart = Number.MAX_SAFE_INTEGER;
+          input.selectionEnd = Number.MAX_SAFE_INTEGER;
         }, 0);
       });
       this.addEvent('click', '.item-update-button', function () {
@@ -573,12 +576,22 @@ var ItemRow = /*#__PURE__*/function (_TableRow) {
           price: _this.querySelector('.item-price-edit-input').valueAsNumber,
           quantity: _this.querySelector('.item-quantity-edit-input').valueAsNumber
         };
-        _domains_VendingMachine__WEBPACK_IMPORTED_MODULE_1__.vendingMachine.updateItem(prevName, updatedItem);
+
+        try {
+          _domains_VendingMachine__WEBPACK_IMPORTED_MODULE_1__.vendingMachine.updateItem(prevName, updatedItem);
+        } catch (err) {
+          window.alert(err);
+        }
       });
       this.addEvent('click', '.item-remove-button', function () {
         if (window.confirm('정말로 삭제하시겠습니까?')) {
           var name = _this.props.name;
-          _domains_VendingMachine__WEBPACK_IMPORTED_MODULE_1__.vendingMachine.removeItem(name);
+
+          try {
+            _domains_VendingMachine__WEBPACK_IMPORTED_MODULE_1__.vendingMachine.removeItem(name);
+          } catch (err) {
+            window.alert(err);
+          }
         }
       });
     }
@@ -604,6 +617,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ NavBar)
 /* harmony export */ });
 /* harmony import */ var _core_Component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../core/Component */ "./src/core/Component.js");
+/* harmony import */ var _configs_constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../configs/constants */ "./src/configs/constants.ts");
+/* harmony import */ var _utils_domUtils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/domUtils */ "./src/utils/domUtils.ts");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -628,6 +643,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
+
 var NavBar = /*#__PURE__*/function (_Component) {
   _inherits(NavBar, _Component);
 
@@ -642,17 +659,15 @@ var NavBar = /*#__PURE__*/function (_Component) {
   _createClass(NavBar, [{
     key: "setup",
     value: function setup() {
-      var href = window.location.href;
-      var location = new URL(href).hash;
       this.state = {
-        location: location
+        location: (0,_utils_domUtils__WEBPACK_IMPORTED_MODULE_2__.getHash)()
       };
     }
   }, {
     key: "template",
     value: function template() {
       var location = this.state.location;
-      return "\n      <a\n        class=\"nav-button styled-button ".concat(location === '#item-management' ? 'selected' : '', "\"\n        href=\"#item-management\"\n      >\n        \uC0C1\uD488 \uAD00\uB9AC\n      </a>\n      <a\n        class=\"nav-button styled-button ").concat(location === '#change-charge' ? 'selected' : '', "\"\n        href=\"#change-charge\"\n      >\n        \uC794\uB3C8 \uCDA9\uC804\n      </a>\n      <a\n        class=\"nav-button styled-button ").concat(location === '#item-purchase' ? 'selected' : '', "\"\n        href=\"#item-purchase\"\n      >\n        \uC0C1\uD488 \uAD6C\uB9E4\n      </a>\n    ");
+      return "\n      <a\n        class=\"nav-button styled-button ".concat(location === _configs_constants__WEBPACK_IMPORTED_MODULE_1__.PAGES.LANDING.PATH || location === _configs_constants__WEBPACK_IMPORTED_MODULE_1__.PAGES.ITEM_MANAGEMENT.PATH ? 'selected' : '', "\"\n        href=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_1__.PAGES.ITEM_MANAGEMENT.PATH, "\"\n      >\n        ").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_1__.PAGES.ITEM_MANAGEMENT.TITLE, "\n      </a>\n      <a\n        class=\"nav-button styled-button ").concat(location === _configs_constants__WEBPACK_IMPORTED_MODULE_1__.PAGES.CHANGE_CHARGE.PATH ? 'selected' : '', "\"\n        href=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_1__.PAGES.CHANGE_CHARGE.PATH, "\"\n      >\n        ").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_1__.PAGES.CHANGE_CHARGE.TITLE, "\n      </a>\n      <a\n        class=\"nav-button styled-button ").concat(location === _configs_constants__WEBPACK_IMPORTED_MODULE_1__.PAGES.ITEM_PURCHASE.PATH ? 'selected' : '', "\"\n        href=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_1__.PAGES.ITEM_PURCHASE.PATH, "\"\n      >\n        ").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_1__.PAGES.ITEM_PURCHASE.TITLE, "\n      </a>\n    ");
     }
   }, {
     key: "setEvent",
@@ -687,6 +702,7 @@ customElements.define('nav-bar', NavBar);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core_Component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../core/Component */ "./src/core/Component.js");
 /* harmony import */ var _domains_VendingMachine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../domains/VendingMachine */ "./src/domains/VendingMachine.ts");
+/* harmony import */ var _configs_constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../configs/constants */ "./src/configs/constants.ts");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
@@ -732,6 +748,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var ChangeChargePage = /*#__PURE__*/function (_Component) {
   _inherits(ChangeChargePage, _Component);
 
@@ -761,7 +778,7 @@ var ChangeChargePage = /*#__PURE__*/function (_Component) {
       });
 
       var totalMoney = _domains_VendingMachine__WEBPACK_IMPORTED_MODULE_1__.vendingMachine.getTotalMoney();
-      return "\n      <section>\n        <h2 hidden>\uC794\uB3C8 \uCDA9\uC804</h2>\n        <form id=\"change-charge-form\" class=\"change-charge-form\">\n          <div>\n            <label for=\"amount\" class=\"description\">\uC790\uD310\uAE30\uAC00 \uBCF4\uC720\uD560 \uAE08\uC561\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694.</label>\n            <input\n              id=\"charge-amount\"\n              class=\"charge-amount-input styled-input\"\n              name=\"amount\"\n              placeholder=\"\uAE08\uC561\"\n              type=\"number\"\n              min=\"10\"\n              max=\"100000\"\n              step=\"10\"\n              required\n              autofocus\n            >\n          </div>\n          <button class=\"add-charge-button styled-button emphasized\">\uCDA9\uC804</button>\n        </form>\n        <p class=\"current-money-indicator\">\uD604\uC7AC \uBCF4\uC720 \uAE08\uC561: <span>".concat(totalMoney, "\uC6D0</span></p>\n      </section>\n      <section>\n        <h2 class=\"table-title\">\uC790\uD310\uAE30\uAC00 \uBCF4\uC720\uD55C \uB3D9\uC804</h2>\n        <table class=\"styled-table\">\n          <thead>\n            <tr class=\"styled-tr\">\n              <th class=\"styled-th\">\uB3D9\uC804</th>\n              <th class=\"styled-th\">\uAC1C\uC218</th>\n            </tr>\n          </thead>\n          <tbody>\n            ").concat(coinArray.map(function (_ref5) {
+      return "\n      <section>\n        <h2 hidden>\uC794\uB3C8 \uCDA9\uC804</h2>\n        <form id=\"change-charge-form\" class=\"change-charge-form\">\n          <div>\n            <label for=\"amount\" class=\"description\">\uC790\uD310\uAE30\uAC00 \uBCF4\uC720\uD560 \uAE08\uC561\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694.</label>\n            <input\n              id=\"charge-amount\"\n              class=\"charge-amount-input styled-input\"\n              name=\"amount\"\n              placeholder=\"\uAE08\uC561\"\n              type=\"number\"\n              min=\"".concat(_configs_constants__WEBPACK_IMPORTED_MODULE_2__.CHARGE_AMOUNT.MIN, "\"\n              max=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_2__.CHARGE_AMOUNT.MAX, "\"\n              step=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_2__.CHARGE_AMOUNT.STEP, "\"\n              required\n              autofocus\n            >\n          </div>\n          <button class=\"add-charge-button styled-button emphasized\">\uCDA9\uC804</button>\n        </form>\n        <p class=\"current-money-indicator\">\uD604\uC7AC \uBCF4\uC720 \uAE08\uC561: <span>").concat(totalMoney, "\uC6D0</span></p>\n      </section>\n      <section>\n        <h2 class=\"table-title\">\uC790\uD310\uAE30\uAC00 \uBCF4\uC720\uD55C \uB3D9\uC804</h2>\n        <table class=\"styled-table\">\n          <thead>\n            <tr class=\"styled-tr\">\n              <th class=\"styled-th\">\uB3D9\uC804</th>\n              <th class=\"styled-th\">\uAC1C\uC218</th>\n            </tr>\n          </thead>\n          <tbody>\n            ").concat(coinArray.map(function (_ref5) {
         var _ref6 = _slicedToArray(_ref5, 2),
             key = _ref6[0],
             value = _ref6[1];
@@ -803,8 +820,9 @@ customElements.define('change-charge', ChangeChargePage);
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core_Component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../core/Component */ "./src/core/Component.js");
-/* harmony import */ var _domains_VendingMachine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../domains/VendingMachine */ "./src/domains/VendingMachine.ts");
-/* harmony import */ var _components_ItemRow__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/ItemRow */ "./src/views/components/ItemRow.js");
+/* harmony import */ var _components_ItemRow__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/ItemRow */ "./src/views/components/ItemRow.js");
+/* harmony import */ var _domains_VendingMachine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../domains/VendingMachine */ "./src/domains/VendingMachine.ts");
+/* harmony import */ var _configs_constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../configs/constants */ "./src/configs/constants.ts");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -831,6 +849,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var ItemManagementPage = /*#__PURE__*/function (_Component) {
   _inherits(ItemManagementPage, _Component);
 
@@ -843,19 +862,12 @@ var ItemManagementPage = /*#__PURE__*/function (_Component) {
   }
 
   _createClass(ItemManagementPage, [{
-    key: "setup",
-    value: function setup() {
-      this.state = {
-        editItems: []
-      };
-    }
-  }, {
     key: "template",
     value: function template() {
-      var items = _domains_VendingMachine__WEBPACK_IMPORTED_MODULE_1__.vendingMachine.useStore(function (state) {
+      var items = _domains_VendingMachine__WEBPACK_IMPORTED_MODULE_2__.vendingMachine.useStore(function (state) {
         return state.items;
       });
-      return "\n      <section>\n        <h2 hidden>\uCD94\uAC00\uD560 \uC0C1\uD488 \uC815\uBCF4</h2>\n        <form id=\"item-add-form\" class=\"item-add-form\">\n          <fieldset class=\"fieldset\">\n            <legend class=\"description\">\uCD94\uAC00\uD560 \uC0C1\uD488 \uD604\uD669\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694.</legend>\n            <label hidden for=\"name\"\">\uC0C1\uD488\uBA85</label>\n            <input\n              id=\"item-name-input\"\n              class=\"item-input styled-input\"\n              name=\"name\"\n              placeholder=\"\uC0C1\uD488\uBA85\"\n              type=\"text\"\n              maxlength=\"10\"\n              required\n              autofocus\n            >\n            <label hidden for=\"price\">\uAC00\uACA9</label>\n            <input\n              id=\"item-price-input\"\n              class=\"item-input styled-input\"\n              name=\"price\"\n              placeholder=\"\uAC00\uACA9\"\n              type=\"number\"\n              step=\"10\"\n              min=\"100\"\n              max=\"10000\"\n              required\n            >\n            <label hidden for=\"quantity\">\uC218\uB7C9</label>\n            <input\n              id=\"item-quantity-input\"\n              class=\"item-input styled-input\"\n              name=\"quantity\"\n              placeholder=\"\uC218\uB7C9\"\n              type=\"number\"\n              step=\"1\"\n              min=\"1\"\n              max=\"20\"\n              required\n            >\n          </fieldset>\n          <button class=\"add-item-button styled-button emphasized\">\uCD94\uAC00</button>\n        </form>\n      </section>\n      <section>\n        <h2 class=\"table-title\">\uC0C1\uD488 \uD604\uD669</h2>\n        <table class=\"styled-table\">\n          <colgroup>\n            <col style=\"width: 25%\">\n            <col style=\"width: 25%\">\n            <col style=\"width: 25%\">\n            <col style=\"width: 25%\">\n          </colgroup>\n          <thead>\n            <tr class=\"styled-tr\">\n              <th class=\"styled-th\">\uC0C1\uD488\uBA85</th>\n              <th class=\"styled-th\">\uAC00\uACA9</th>\n              <th class=\"styled-th\">\uC218\uB7C9</th>\n              <th class=\"styled-th\"></th>\n            </tr>\n          </thead>\n        </table>\n        <div class=\"scrollable\">\n          <table class=\"styled-table no-border-top\">\n            <colgroup>\n              <col style=\"width: 25%\">\n              <col style=\"width: 25%\">\n              <col style=\"width: 25%\">\n              <col style=\"width: 25%\">\n            </colgroup>\n            <tbody>\n              ".concat(items.map(function (_ref) {
+      return "\n      <section>\n        <h2 hidden>\uCD94\uAC00\uD560 \uC0C1\uD488 \uC815\uBCF4</h2>\n        <form id=\"item-add-form\" class=\"item-add-form\">\n          <fieldset class=\"fieldset\">\n            <legend class=\"description\">\uCD94\uAC00\uD560 \uC0C1\uD488 \uD604\uD669\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694.</legend>\n            <label hidden for=\"name\">".concat(_configs_constants__WEBPACK_IMPORTED_MODULE_3__.ITEM.NAME.LABEL, "</label>\n            <input\n              id=\"item-name-input\"\n              class=\"item-input styled-input\"\n              name=\"name\"\n              placeholder=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_3__.ITEM.NAME.LABEL, "\"\n              type=\"text\"\n              maxlength=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_3__.ITEM.NAME.LENGTH.MAX, "\"\n              required\n              autofocus\n            >\n            <label hidden for=\"price\">").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_3__.ITEM.PRICE.LABEL, "</label>\n            <input\n              id=\"item-price-input\"\n              class=\"item-input styled-input\"\n              name=\"price\"\n              placeholder=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_3__.ITEM.PRICE.LABEL, "\"\n              type=\"number\"\n              min=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_3__.ITEM.PRICE.MIN, "\"\n              max=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_3__.ITEM.PRICE.MAX, "\"\n              step=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_3__.ITEM.PRICE.STEP, "\"\n              required\n            >\n            <label hidden for=\"quantity\">").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_3__.ITEM.QUANTITY.LABEL, "</label>\n            <input\n              id=\"item-quantity-input\"\n              class=\"item-input styled-input\"\n              name=\"quantity\"\n              placeholder=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_3__.ITEM.QUANTITY.LABEL, "\"\n              type=\"number\"\n              min=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_3__.ITEM.QUANTITY.MIN, "\"\n              max=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_3__.ITEM.QUANTITY.MAX, "\"\n              step=\"1\"\n              required\n            >\n          </fieldset>\n          <button class=\"add-item-button styled-button emphasized\">\uCD94\uAC00</button>\n        </form>\n      </section>\n      <section>\n        <h2 class=\"table-title\">\uC0C1\uD488 \uD604\uD669</h2>\n        <table class=\"styled-table\">\n          <colgroup>\n            <col style=\"width: 25%\">\n            <col style=\"width: 25%\">\n            <col style=\"width: 25%\">\n            <col style=\"width: 25%\">\n          </colgroup>\n          <thead>\n            <tr class=\"styled-tr\">\n              <th class=\"styled-th\">").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_3__.ITEM.NAME.LABEL, "</th>\n              <th class=\"styled-th\">").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_3__.ITEM.PRICE.LABEL, "</th>\n              <th class=\"styled-th\">").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_3__.ITEM.QUANTITY.LABEL, "</th>\n              <th class=\"styled-th\"></th>\n            </tr>\n          </thead>\n        </table>\n        <div class=\"scrollable\">\n          <table class=\"styled-table no-border-top\">\n            <colgroup>\n              <col style=\"width: 25%\">\n              <col style=\"width: 25%\">\n              <col style=\"width: 25%\">\n              <col style=\"width: 25%\">\n            </colgroup>\n            <tbody>\n              ").concat(items.map(function (_ref) {
         var name = _ref.name,
             price = _ref.price,
             quantity = _ref.quantity;
@@ -875,7 +887,7 @@ var ItemManagementPage = /*#__PURE__*/function (_Component) {
         };
 
         try {
-          _domains_VendingMachine__WEBPACK_IMPORTED_MODULE_1__.vendingMachine.addItem(item);
+          _domains_VendingMachine__WEBPACK_IMPORTED_MODULE_2__.vendingMachine.addItem(item);
         } catch (err) {
           window.alert(err);
         }
@@ -936,7 +948,7 @@ var ItemPurchasePage = /*#__PURE__*/function (_Component) {
   _createClass(ItemPurchasePage, [{
     key: "template",
     value: function template() {
-      return "\n      <div>\n        <p>comming soon</p>\n      </div>\n    ";
+      return "\n      <div>\n        <p>2\uB2E8\uACC4 \uAD6C\uD604 \uC608\uC815</p>\n      </div>\n    ";
     }
   }]);
 
@@ -1023,7 +1035,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "html {\n  font-family: 'Roboto', sans-serif;\n  font-size: 16px;\n}\n\nbody {\n  background-color: #f9f9f9;\n  letter-spacing: 0.5px;\n}\n\ninput {\n  margin: 0;\n  padding: 0;\n}\n\n.app-container {\n  border: 1px solid rgba(0, 0, 0, 0.12);\n  border-radius: 4px;\n  background-color: #ffffff;\n  display: flex;\n  flex-direction: column;\n  width: 518px;\n  min-height: 593px;\n  margin: 0 auto;\n  align-items: center;\n  margin-top: 32px;\n  padding: 40px;\n}\n\n.title {\n  font-weight: 600;\n  font-size: 34px;\n  line-height: 36px;\n  margin-bottom: 32px;\n}\n\n.nav-bar {\n  display: flex;\n  flex-direction: row;\n  gap: 4px;\n}\n\n.nav-button {\n  width: 117px;\n  height: 36px;\n}\n\n.styled-button {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  border: none;\n  border-radius: 4px;\n  text-decoration: none;\n  outline: none;\n  background: #f5f5f5;\n  color: black;\n  cursor: pointer;\n}\n\n.styled-button.selected {\n  background: #ceecf0;\n}\n\n.styled-button.emphasized {\n  background: #00bcd4;\n  color: white;\n}\n\n.page-container {\n  margin-top: 52px;\n}\n\n.page {\n  display: flex;\n  flex-direction: column;\n  gap: 48px;\n}\n\n.description {\n  display: block;\n  font-style: normal;\n  font-weight: 400;\n  font-size: 16px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n  margin-bottom: 4px;\n}\n\n.styled-input {\n  /* padding-left: 9px; */\n  font-family: 'Roboto', sans-serif;\n  font-style: normal;\n  font-weight: 400;\n  font-size: 16px;\n  line-height: 24px;\n  border: 1px solid rgba(180, 180, 180, 1);\n  border-radius: 4px;\n}\n\n.styled-input::placeholder {\n  color: #8b8b8b;\n}\n\n.transparent-input {\n  font-family: 'Roboto', sans-serif;\n  font-size: 16px;\n  text-align: center;\n  width: 100%;\n  font-style: normal;\n  font-weight: 400;\n  font-size: 16px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n  padding: 0;\n  border: 0;\n}\n\n.table-title {\n  font-style: normal;\n  font-weight: 600;\n  font-size: 20px;\n  line-height: 24px;\n  text-align: center;\n  letter-spacing: 0.15px;\n  margin-bottom: 16px;\n}\n\n.styled-table {\n  width: 100%;\n  border-top: 1px solid #dcdcdc;\n  border-collapse: collapse;\n  text-align: center;\n}\n\n.no-border-top {\n  border-top: none;\n}\n\n.scrollable {\n  max-height: 225px;\n  overflow-y: auto;\n}\n\n.styled-th {\n  font-style: normal;\n  font-weight: 600;\n  font-size: 16px;\n  line-height: 24px;\n  border-bottom: 1px solid #dcdcdc;\n  padding: 8px;\n}\n\n.styled-tr {\n  border-bottom: 1px solid #dcdcdc;\n  padding: 8px;\n}\n\n.styled-td {\n  font-style: normal;\n  font-weight: 400;\n  font-size: 16px;\n  line-height: 24px;\n  border-bottom: 1px solid #dcdcdc;\n  padding: 8px;\n}\n\ninput::-webkit-inner-spin-button {\n  -webkit-appearance: none;\n}\n", "",{"version":3,"sources":["webpack://./src/css/app.css"],"names":[],"mappings":"AAAA;EACE,iCAAiC;EACjC,eAAe;AACjB;;AAEA;EACE,yBAAyB;EACzB,qBAAqB;AACvB;;AAEA;EACE,SAAS;EACT,UAAU;AACZ;;AAEA;EACE,qCAAqC;EACrC,kBAAkB;EAClB,yBAAyB;EACzB,aAAa;EACb,sBAAsB;EACtB,YAAY;EACZ,iBAAiB;EACjB,cAAc;EACd,mBAAmB;EACnB,gBAAgB;EAChB,aAAa;AACf;;AAEA;EACE,gBAAgB;EAChB,eAAe;EACf,iBAAiB;EACjB,mBAAmB;AACrB;;AAEA;EACE,aAAa;EACb,mBAAmB;EACnB,QAAQ;AACV;;AAEA;EACE,YAAY;EACZ,YAAY;AACd;;AAEA;EACE,aAAa;EACb,uBAAuB;EACvB,mBAAmB;EACnB,YAAY;EACZ,kBAAkB;EAClB,qBAAqB;EACrB,aAAa;EACb,mBAAmB;EACnB,YAAY;EACZ,eAAe;AACjB;;AAEA;EACE,mBAAmB;AACrB;;AAEA;EACE,mBAAmB;EACnB,YAAY;AACd;;AAEA;EACE,gBAAgB;AAClB;;AAEA;EACE,aAAa;EACb,sBAAsB;EACtB,SAAS;AACX;;AAEA;EACE,cAAc;EACd,kBAAkB;EAClB,gBAAgB;EAChB,eAAe;EACf,iBAAiB;EACjB,qBAAqB;EACrB,kBAAkB;AACpB;;AAEA;EACE,uBAAuB;EACvB,iCAAiC;EACjC,kBAAkB;EAClB,gBAAgB;EAChB,eAAe;EACf,iBAAiB;EACjB,wCAAwC;EACxC,kBAAkB;AACpB;;AAEA;EACE,cAAc;AAChB;;AAEA;EACE,iCAAiC;EACjC,eAAe;EACf,kBAAkB;EAClB,WAAW;EACX,kBAAkB;EAClB,gBAAgB;EAChB,eAAe;EACf,iBAAiB;EACjB,qBAAqB;EACrB,UAAU;EACV,SAAS;AACX;;AAEA;EACE,kBAAkB;EAClB,gBAAgB;EAChB,eAAe;EACf,iBAAiB;EACjB,kBAAkB;EAClB,sBAAsB;EACtB,mBAAmB;AACrB;;AAEA;EACE,WAAW;EACX,6BAA6B;EAC7B,yBAAyB;EACzB,kBAAkB;AACpB;;AAEA;EACE,gBAAgB;AAClB;;AAEA;EACE,iBAAiB;EACjB,gBAAgB;AAClB;;AAEA;EACE,kBAAkB;EAClB,gBAAgB;EAChB,eAAe;EACf,iBAAiB;EACjB,gCAAgC;EAChC,YAAY;AACd;;AAEA;EACE,gCAAgC;EAChC,YAAY;AACd;;AAEA;EACE,kBAAkB;EAClB,gBAAgB;EAChB,eAAe;EACf,iBAAiB;EACjB,gCAAgC;EAChC,YAAY;AACd;;AAEA;EACE,wBAAwB;AAC1B","sourcesContent":["html {\n  font-family: 'Roboto', sans-serif;\n  font-size: 16px;\n}\n\nbody {\n  background-color: #f9f9f9;\n  letter-spacing: 0.5px;\n}\n\ninput {\n  margin: 0;\n  padding: 0;\n}\n\n.app-container {\n  border: 1px solid rgba(0, 0, 0, 0.12);\n  border-radius: 4px;\n  background-color: #ffffff;\n  display: flex;\n  flex-direction: column;\n  width: 518px;\n  min-height: 593px;\n  margin: 0 auto;\n  align-items: center;\n  margin-top: 32px;\n  padding: 40px;\n}\n\n.title {\n  font-weight: 600;\n  font-size: 34px;\n  line-height: 36px;\n  margin-bottom: 32px;\n}\n\n.nav-bar {\n  display: flex;\n  flex-direction: row;\n  gap: 4px;\n}\n\n.nav-button {\n  width: 117px;\n  height: 36px;\n}\n\n.styled-button {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  border: none;\n  border-radius: 4px;\n  text-decoration: none;\n  outline: none;\n  background: #f5f5f5;\n  color: black;\n  cursor: pointer;\n}\n\n.styled-button.selected {\n  background: #ceecf0;\n}\n\n.styled-button.emphasized {\n  background: #00bcd4;\n  color: white;\n}\n\n.page-container {\n  margin-top: 52px;\n}\n\n.page {\n  display: flex;\n  flex-direction: column;\n  gap: 48px;\n}\n\n.description {\n  display: block;\n  font-style: normal;\n  font-weight: 400;\n  font-size: 16px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n  margin-bottom: 4px;\n}\n\n.styled-input {\n  /* padding-left: 9px; */\n  font-family: 'Roboto', sans-serif;\n  font-style: normal;\n  font-weight: 400;\n  font-size: 16px;\n  line-height: 24px;\n  border: 1px solid rgba(180, 180, 180, 1);\n  border-radius: 4px;\n}\n\n.styled-input::placeholder {\n  color: #8b8b8b;\n}\n\n.transparent-input {\n  font-family: 'Roboto', sans-serif;\n  font-size: 16px;\n  text-align: center;\n  width: 100%;\n  font-style: normal;\n  font-weight: 400;\n  font-size: 16px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n  padding: 0;\n  border: 0;\n}\n\n.table-title {\n  font-style: normal;\n  font-weight: 600;\n  font-size: 20px;\n  line-height: 24px;\n  text-align: center;\n  letter-spacing: 0.15px;\n  margin-bottom: 16px;\n}\n\n.styled-table {\n  width: 100%;\n  border-top: 1px solid #dcdcdc;\n  border-collapse: collapse;\n  text-align: center;\n}\n\n.no-border-top {\n  border-top: none;\n}\n\n.scrollable {\n  max-height: 225px;\n  overflow-y: auto;\n}\n\n.styled-th {\n  font-style: normal;\n  font-weight: 600;\n  font-size: 16px;\n  line-height: 24px;\n  border-bottom: 1px solid #dcdcdc;\n  padding: 8px;\n}\n\n.styled-tr {\n  border-bottom: 1px solid #dcdcdc;\n  padding: 8px;\n}\n\n.styled-td {\n  font-style: normal;\n  font-weight: 400;\n  font-size: 16px;\n  line-height: 24px;\n  border-bottom: 1px solid #dcdcdc;\n  padding: 8px;\n}\n\ninput::-webkit-inner-spin-button {\n  -webkit-appearance: none;\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "html {\n  font-family: 'Roboto', sans-serif;\n  font-size: 16px;\n}\n\nbody {\n  background-color: #f9f9f9;\n  letter-spacing: 0.5px;\n}\n\ninput {\n  margin: 0;\n  padding: 0;\n}\n\n.app-container {\n  border: 1px solid rgba(0, 0, 0, 0.12);\n  border-radius: 4px;\n  background-color: #ffffff;\n  display: flex;\n  flex-direction: column;\n  width: 518px;\n  min-height: 593px;\n  margin: 0 auto;\n  align-items: center;\n  margin-top: 32px;\n  padding: 40px;\n}\n\n.title {\n  font-weight: 600;\n  font-size: 34px;\n  line-height: 36px;\n  margin-bottom: 32px;\n}\n\n.nav-bar {\n  display: flex;\n  flex-direction: row;\n  gap: 4px;\n}\n\n.nav-button {\n  width: 117px;\n  height: 36px;\n}\n\n.styled-button {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  border: none;\n  border-radius: 4px;\n  text-decoration: none;\n  outline: none;\n  background: #f5f5f5;\n  color: black;\n  cursor: pointer;\n}\n\n.styled-button.selected {\n  background: #ceecf0;\n}\n\n.styled-button.emphasized {\n  background: #00bcd4;\n  color: white;\n}\n\n.page-container {\n  margin-top: 52px;\n}\n\n.page {\n  display: flex;\n  flex-direction: column;\n  gap: 48px;\n}\n\n.description {\n  display: block;\n  font-style: normal;\n  font-weight: 400;\n  font-size: 16px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n  margin-bottom: 4px;\n}\n\n.styled-input {\n  font-family: 'Roboto', sans-serif;\n  font-style: normal;\n  font-weight: 400;\n  font-size: 16px;\n  line-height: 24px;\n  border: 1px solid rgba(180, 180, 180, 1);\n  border-radius: 4px;\n}\n\n.styled-input::placeholder {\n  color: #8b8b8b;\n}\n\n.transparent-input {\n  font-family: 'Roboto', sans-serif;\n  font-size: 16px;\n  text-align: center;\n  width: 100%;\n  font-style: normal;\n  font-weight: 400;\n  font-size: 16px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n  padding: 0;\n  border: 0;\n}\n\n.table-title {\n  font-style: normal;\n  font-weight: 600;\n  font-size: 20px;\n  line-height: 24px;\n  text-align: center;\n  letter-spacing: 0.15px;\n  margin-bottom: 16px;\n}\n\n.styled-table {\n  width: 100%;\n  border-top: 1px solid #dcdcdc;\n  border-collapse: collapse;\n  text-align: center;\n}\n\n.no-border-top {\n  border-top: none;\n}\n\n.scrollable {\n  max-height: 225px;\n  overflow-y: auto;\n}\n\n.styled-th {\n  font-style: normal;\n  font-weight: 600;\n  font-size: 16px;\n  line-height: 24px;\n  border-bottom: 1px solid #dcdcdc;\n  padding: 8px;\n}\n\n.styled-tr {\n  border-bottom: 1px solid #dcdcdc;\n  padding: 8px;\n}\n\n.styled-td {\n  font-style: normal;\n  font-weight: 400;\n  font-size: 16px;\n  line-height: 24px;\n  border-bottom: 1px solid #dcdcdc;\n  padding: 8px;\n}\n\ninput::-webkit-inner-spin-button {\n  -webkit-appearance: none;\n}\n", "",{"version":3,"sources":["webpack://./src/css/app.css"],"names":[],"mappings":"AAAA;EACE,iCAAiC;EACjC,eAAe;AACjB;;AAEA;EACE,yBAAyB;EACzB,qBAAqB;AACvB;;AAEA;EACE,SAAS;EACT,UAAU;AACZ;;AAEA;EACE,qCAAqC;EACrC,kBAAkB;EAClB,yBAAyB;EACzB,aAAa;EACb,sBAAsB;EACtB,YAAY;EACZ,iBAAiB;EACjB,cAAc;EACd,mBAAmB;EACnB,gBAAgB;EAChB,aAAa;AACf;;AAEA;EACE,gBAAgB;EAChB,eAAe;EACf,iBAAiB;EACjB,mBAAmB;AACrB;;AAEA;EACE,aAAa;EACb,mBAAmB;EACnB,QAAQ;AACV;;AAEA;EACE,YAAY;EACZ,YAAY;AACd;;AAEA;EACE,aAAa;EACb,uBAAuB;EACvB,mBAAmB;EACnB,YAAY;EACZ,kBAAkB;EAClB,qBAAqB;EACrB,aAAa;EACb,mBAAmB;EACnB,YAAY;EACZ,eAAe;AACjB;;AAEA;EACE,mBAAmB;AACrB;;AAEA;EACE,mBAAmB;EACnB,YAAY;AACd;;AAEA;EACE,gBAAgB;AAClB;;AAEA;EACE,aAAa;EACb,sBAAsB;EACtB,SAAS;AACX;;AAEA;EACE,cAAc;EACd,kBAAkB;EAClB,gBAAgB;EAChB,eAAe;EACf,iBAAiB;EACjB,qBAAqB;EACrB,kBAAkB;AACpB;;AAEA;EACE,iCAAiC;EACjC,kBAAkB;EAClB,gBAAgB;EAChB,eAAe;EACf,iBAAiB;EACjB,wCAAwC;EACxC,kBAAkB;AACpB;;AAEA;EACE,cAAc;AAChB;;AAEA;EACE,iCAAiC;EACjC,eAAe;EACf,kBAAkB;EAClB,WAAW;EACX,kBAAkB;EAClB,gBAAgB;EAChB,eAAe;EACf,iBAAiB;EACjB,qBAAqB;EACrB,UAAU;EACV,SAAS;AACX;;AAEA;EACE,kBAAkB;EAClB,gBAAgB;EAChB,eAAe;EACf,iBAAiB;EACjB,kBAAkB;EAClB,sBAAsB;EACtB,mBAAmB;AACrB;;AAEA;EACE,WAAW;EACX,6BAA6B;EAC7B,yBAAyB;EACzB,kBAAkB;AACpB;;AAEA;EACE,gBAAgB;AAClB;;AAEA;EACE,iBAAiB;EACjB,gBAAgB;AAClB;;AAEA;EACE,kBAAkB;EAClB,gBAAgB;EAChB,eAAe;EACf,iBAAiB;EACjB,gCAAgC;EAChC,YAAY;AACd;;AAEA;EACE,gCAAgC;EAChC,YAAY;AACd;;AAEA;EACE,kBAAkB;EAClB,gBAAgB;EAChB,eAAe;EACf,iBAAiB;EACjB,gCAAgC;EAChC,YAAY;AACd;;AAEA;EACE,wBAAwB;AAC1B","sourcesContent":["html {\n  font-family: 'Roboto', sans-serif;\n  font-size: 16px;\n}\n\nbody {\n  background-color: #f9f9f9;\n  letter-spacing: 0.5px;\n}\n\ninput {\n  margin: 0;\n  padding: 0;\n}\n\n.app-container {\n  border: 1px solid rgba(0, 0, 0, 0.12);\n  border-radius: 4px;\n  background-color: #ffffff;\n  display: flex;\n  flex-direction: column;\n  width: 518px;\n  min-height: 593px;\n  margin: 0 auto;\n  align-items: center;\n  margin-top: 32px;\n  padding: 40px;\n}\n\n.title {\n  font-weight: 600;\n  font-size: 34px;\n  line-height: 36px;\n  margin-bottom: 32px;\n}\n\n.nav-bar {\n  display: flex;\n  flex-direction: row;\n  gap: 4px;\n}\n\n.nav-button {\n  width: 117px;\n  height: 36px;\n}\n\n.styled-button {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  border: none;\n  border-radius: 4px;\n  text-decoration: none;\n  outline: none;\n  background: #f5f5f5;\n  color: black;\n  cursor: pointer;\n}\n\n.styled-button.selected {\n  background: #ceecf0;\n}\n\n.styled-button.emphasized {\n  background: #00bcd4;\n  color: white;\n}\n\n.page-container {\n  margin-top: 52px;\n}\n\n.page {\n  display: flex;\n  flex-direction: column;\n  gap: 48px;\n}\n\n.description {\n  display: block;\n  font-style: normal;\n  font-weight: 400;\n  font-size: 16px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n  margin-bottom: 4px;\n}\n\n.styled-input {\n  font-family: 'Roboto', sans-serif;\n  font-style: normal;\n  font-weight: 400;\n  font-size: 16px;\n  line-height: 24px;\n  border: 1px solid rgba(180, 180, 180, 1);\n  border-radius: 4px;\n}\n\n.styled-input::placeholder {\n  color: #8b8b8b;\n}\n\n.transparent-input {\n  font-family: 'Roboto', sans-serif;\n  font-size: 16px;\n  text-align: center;\n  width: 100%;\n  font-style: normal;\n  font-weight: 400;\n  font-size: 16px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n  padding: 0;\n  border: 0;\n}\n\n.table-title {\n  font-style: normal;\n  font-weight: 600;\n  font-size: 20px;\n  line-height: 24px;\n  text-align: center;\n  letter-spacing: 0.15px;\n  margin-bottom: 16px;\n}\n\n.styled-table {\n  width: 100%;\n  border-top: 1px solid #dcdcdc;\n  border-collapse: collapse;\n  text-align: center;\n}\n\n.no-border-top {\n  border-top: none;\n}\n\n.scrollable {\n  max-height: 225px;\n  overflow-y: auto;\n}\n\n.styled-th {\n  font-style: normal;\n  font-weight: 600;\n  font-size: 16px;\n  line-height: 24px;\n  border-bottom: 1px solid #dcdcdc;\n  padding: 8px;\n}\n\n.styled-tr {\n  border-bottom: 1px solid #dcdcdc;\n  padding: 8px;\n}\n\n.styled-td {\n  font-style: normal;\n  font-weight: 400;\n  font-size: 16px;\n  line-height: 24px;\n  border-bottom: 1px solid #dcdcdc;\n  padding: 8px;\n}\n\ninput::-webkit-inner-spin-button {\n  -webkit-appearance: none;\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -1086,7 +1098,7 @@ ___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_app_css__WEBPACK_
 ___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_itemManagementPage_css__WEBPACK_IMPORTED_MODULE_3__["default"]);
 ___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_changeChargePage_css__WEBPACK_IMPORTED_MODULE_4__["default"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "/* font Roboto */\n/* reset css */\n", "",{"version":3,"sources":["webpack://./src/css/index.css"],"names":[],"mappings":"AAAA,gBAAgB;AAEhB,cAAc","sourcesContent":["/* font Roboto */\n@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');\n/* reset css */\n@import url('https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css');\n@import './app.css';\n@import './itemManagementPage.css';\n@import './changeChargePage.css';\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n", "",{"version":3,"sources":[],"names":[],"mappings":"","sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -1621,6 +1633,74 @@ module.exports = styleTagTransform;
 
 /***/ }),
 
+/***/ "./src/configs/constants.ts":
+/*!**********************************!*\
+  !*** ./src/configs/constants.ts ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "CHARGE_AMOUNT": () => (/* binding */ CHARGE_AMOUNT),
+/* harmony export */   "ITEM": () => (/* binding */ ITEM),
+/* harmony export */   "COIN": () => (/* binding */ COIN),
+/* harmony export */   "PAGES": () => (/* binding */ PAGES)
+/* harmony export */ });
+var CHARGE_AMOUNT = {
+    LABEL: '충전 금액',
+    MIN: 10,
+    MAX: 100000,
+    STEP: 10
+};
+var ITEM = {
+    NAME: {
+        LABEL: '상품명',
+        LENGTH: {
+            MIN: 1,
+            MAX: 10
+        }
+    },
+    PRICE: {
+        LABEL: '가격',
+        MIN: 100,
+        MAX: 10000,
+        STEP: 10
+    },
+    QUANTITY: {
+        LABEL: '수량',
+        MIN: 1,
+        MAX: 20
+    }
+};
+var COIN = {
+    VALUES: [10, 50, 100, 500]
+};
+var PAGES = {
+    LANDING: {
+        TITLE: '',
+        PATH: ''
+    },
+    ITEM_MANAGEMENT: {
+        TITLE: '상품 관리',
+        PATH: '#item-management'
+    },
+    CHANGE_CHARGE: {
+        TITLE: '잔돈 충전',
+        PATH: '#change-charge'
+    },
+    ITEM_PURCHASE: {
+        TITLE: '상품 구매',
+        PATH: '#item-purchase'
+    },
+    DEFAULT: {
+        TITLE: '',
+        PATH: '*'
+    }
+};
+
+
+/***/ }),
+
 /***/ "./src/core/Subject.ts":
 /*!*****************************!*\
   !*** ./src/core/Subject.ts ***!
@@ -1690,7 +1770,7 @@ var Subject = /** @class */ (function () {
             this.notify();
             this.updated = false;
         }
-        requestAnimationFrame(function () {
+        window.requestAnimationFrame(function () {
             _this.checkUpdated();
         });
     };
@@ -1722,7 +1802,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _core_Subject__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/Subject */ "./src/core/Subject.ts");
 /* harmony import */ var _utils_commons__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/commons */ "./src/utils/commons.ts");
-/* harmony import */ var _utils_coinUtil__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/coinUtil */ "./src/utils/coinUtil.ts");
+/* harmony import */ var _utils_coinUtils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/coinUtils */ "./src/utils/coinUtils.ts");
 /* harmony import */ var _utils_validator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/validator */ "./src/utils/validator.ts");
 var __assign = (undefined && undefined.__assign) || function () {
     __assign = Object.assign || function(t) {
@@ -1773,18 +1853,14 @@ var VendingMachine = /** @class */ (function () {
         this.state.items = __spreadArray(__spreadArray([], this.state.items, true), [newItem], false);
     };
     VendingMachine.prototype.updateItem = function (name, updatedItem) {
-        if (!this.findItem(name))
-            throw new Error('error');
-        if (name !== updatedItem.name && this.findItem(updatedItem.name))
-            throw new Error('error');
         (0,_utils_validator__WEBPACK_IMPORTED_MODULE_3__.validate)(_utils_validator__WEBPACK_IMPORTED_MODULE_3__.itemValidator, updatedItem);
+        (0,_utils_validator__WEBPACK_IMPORTED_MODULE_3__.validate)(_utils_validator__WEBPACK_IMPORTED_MODULE_3__.updatedItemValidator, this, name, updatedItem);
         this.state.items = this.state.items.map(function (item) {
             return item.name === name ? updatedItem : item;
         });
     };
     VendingMachine.prototype.removeItem = function (name) {
-        if (!this.findItem(name))
-            throw new Error('error');
+        (0,_utils_validator__WEBPACK_IMPORTED_MODULE_3__.validate)(_utils_validator__WEBPACK_IMPORTED_MODULE_3__.removedItemValidator, this);
         this.state.items = this.state.items.filter(function (item) { return item.name !== name; });
     };
     VendingMachine.prototype.findItem = function (name) {
@@ -1793,7 +1869,7 @@ var VendingMachine = /** @class */ (function () {
     VendingMachine.prototype.addCoin = function (amount) {
         var _this = this;
         (0,_utils_validator__WEBPACK_IMPORTED_MODULE_3__.validate)(_utils_validator__WEBPACK_IMPORTED_MODULE_3__.amountValidator, amount, this.getTotalMoney());
-        var randomCoins = (0,_utils_coinUtil__WEBPACK_IMPORTED_MODULE_2__.createRandomCoins)(amount);
+        var randomCoins = (0,_utils_coinUtils__WEBPACK_IMPORTED_MODULE_2__.createRandomCoins)(amount);
         var updatedCoins = {
             10: 0,
             50: 0,
@@ -1824,28 +1900,33 @@ var vendingMachine = new VendingMachine([], {
 
 /***/ }),
 
-/***/ "./src/utils/coinUtil.ts":
-/*!*******************************!*\
-  !*** ./src/utils/coinUtil.ts ***!
-  \*******************************/
+/***/ "./src/utils/coinUtils.ts":
+/*!********************************!*\
+  !*** ./src/utils/coinUtils.ts ***!
+  \********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "createRandomCoins": () => (/* binding */ createRandomCoins)
 /* harmony export */ });
+/* harmony import */ var _configs_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../configs/constants */ "./src/configs/constants.ts");
+/* harmony import */ var _commons__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./commons */ "./src/utils/commons.ts");
+
+
+var emptyCoins = {
+    10: 0,
+    50: 0,
+    100: 0,
+    500: 0
+};
 var getRandomCoin = function () {
-    var coinValueList = [10, 50, 100, 500];
+    var coinValueList = _configs_constants__WEBPACK_IMPORTED_MODULE_0__.COIN.VALUES;
     var randomIndex = Math.floor(Math.random() * 4);
     return coinValueList[randomIndex];
 };
 var createRandomCoins = function (amount) {
-    var coins = {
-        10: 0,
-        50: 0,
-        100: 0,
-        500: 0
-    };
+    var coins = (0,_commons__WEBPACK_IMPORTED_MODULE_1__.deepClone)(emptyCoins);
     var sum = 0;
     while (sum !== amount) {
         var randomCoin = getRandomCoin();
@@ -1938,6 +2019,24 @@ var deepClone = function (obj) {
 
 /***/ }),
 
+/***/ "./src/utils/domUtils.ts":
+/*!*******************************!*\
+  !*** ./src/utils/domUtils.ts ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getHash": () => (/* binding */ getHash)
+/* harmony export */ });
+var getHash = function (target) {
+    var href = (target || window).location.href;
+    return new URL(href).hash;
+};
+
+
+/***/ }),
+
 /***/ "./src/utils/validator.ts":
 /*!********************************!*\
   !*** ./src/utils/validator.ts ***!
@@ -1948,8 +2047,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "validate": () => (/* binding */ validate),
 /* harmony export */   "itemValidator": () => (/* binding */ itemValidator),
+/* harmony export */   "updatedItemValidator": () => (/* binding */ updatedItemValidator),
+/* harmony export */   "removedItemValidator": () => (/* binding */ removedItemValidator),
 /* harmony export */   "amountValidator": () => (/* binding */ amountValidator)
 /* harmony export */ });
+/* harmony import */ var _configs_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../configs/constants */ "./src/configs/constants.ts");
+
 var validate = function (validator) {
     var target = [];
     for (var _i = 1; _i < arguments.length; _i++) {
@@ -1963,36 +2066,67 @@ var validate = function (validator) {
 };
 var itemValidator = [
     {
-        test: function (item) { return item.quantity <= 20; },
-        errorMessage: '상품의 최대 수량은 20개입니다.'
+        test: function (item) {
+            return item.name.trim().length >= _configs_constants__WEBPACK_IMPORTED_MODULE_0__.ITEM.NAME.LENGTH.MIN &&
+                item.name.trim().length <= _configs_constants__WEBPACK_IMPORTED_MODULE_0__.ITEM.NAME.LENGTH.MAX;
+        },
+        errorMessage: "\uC0C1\uD488\uBA85\uC740 ".concat(_configs_constants__WEBPACK_IMPORTED_MODULE_0__.ITEM.NAME.LENGTH.MIN, "\uC5D0\uC11C ").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_0__.ITEM.NAME.LENGTH.MAX, " \uAE00\uC790 \uC0AC\uC774\uC5EC\uC57C \uD569\uB2C8\uB2E4.")
     },
     {
-        test: function (item) { return item.price % 10 === 0; },
-        errorMessage: '가격은 10원 단위여야 합니다.'
+        test: function (item) { return item.price % _configs_constants__WEBPACK_IMPORTED_MODULE_0__.ITEM.PRICE.STEP === 0; },
+        errorMessage: "\uC0C1\uD488 \uAC00\uACA9\uC740 ".concat(_configs_constants__WEBPACK_IMPORTED_MODULE_0__.ITEM.PRICE.STEP, "\uC6D0 \uB2E8\uC704\uC5EC\uC57C \uD569\uB2C8\uB2E4.")
     },
     {
         test: function (item) {
-            return item.name.trim().length <= 10 && item.name.trim().length > 0;
+            return item.price >= _configs_constants__WEBPACK_IMPORTED_MODULE_0__.ITEM.PRICE.MIN && item.price <= _configs_constants__WEBPACK_IMPORTED_MODULE_0__.ITEM.PRICE.MAX;
         },
-        errorMessage: '상품명은 0~10 글자 사이여야 합니다.'
+        errorMessage: "\uC0C1\uD488 \uAC00\uACA9\uC740 ".concat(_configs_constants__WEBPACK_IMPORTED_MODULE_0__.ITEM.PRICE.MIN, "\uC5D0\uC11C ").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_0__.ITEM.PRICE.MAX, "\uC6D0 \uC0AC\uC774\uC5EC\uC57C \uD569\uB2C8\uB2E4.")
     },
     {
-        test: function (item) { return item.price >= 100 && item.price <= 10000; },
-        errorMessage: '상품 가격은 100원 이상, 10000원 이하여야 합니다.'
+        test: function (item) {
+            return item.quantity >= _configs_constants__WEBPACK_IMPORTED_MODULE_0__.ITEM.QUANTITY.MIN && item.quantity <= _configs_constants__WEBPACK_IMPORTED_MODULE_0__.ITEM.QUANTITY.MAX;
+        },
+        errorMessage: "\uC0C1\uD488\uC758 \uC218\uB7C9\uC740 ".concat(_configs_constants__WEBPACK_IMPORTED_MODULE_0__.ITEM.QUANTITY.MIN, "\uC5D0\uC11C ").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_0__.ITEM.QUANTITY.MAX, "\uAC1C \uC0AC\uC774\uC5EC\uC57C \uD569\uB2C8\uB2E4.")
+    },
+];
+var updatedItemValidator = [
+    {
+        test: function (vendingMachine, name) {
+            return vendingMachine.findItem(name);
+        },
+        errorMessage: '존재하지 않는 상품입니다.'
+    },
+    {
+        test: function (vendingMachine, name, updatedItem) {
+            return name === updatedItem.name || !vendingMachine.findItem(updatedItem.name);
+        },
+        errorMessage: '이미 존재하는 상품명입니다. 다른 상품명을 입력해주세요.'
+    },
+];
+var removedItemValidator = [
+    {
+        test: function (vendingMachine, name) {
+            return vendingMachine.findItem(name);
+        },
+        errorMessage: '존재하지 않는 상품입니다.'
     },
 ];
 var amountValidator = [
     {
-        test: function (amount) { return amount >= 10 && amount <= 100000; },
-        errorMessage: '10~100000 범위의 금액을 입력해주세요'
+        test: function (amount) {
+            return amount >= _configs_constants__WEBPACK_IMPORTED_MODULE_0__.CHARGE_AMOUNT.MIN && amount <= _configs_constants__WEBPACK_IMPORTED_MODULE_0__.CHARGE_AMOUNT.MAX;
+        },
+        errorMessage: "\uCDA9\uC804 \uAE08\uC561\uC740 ".concat(_configs_constants__WEBPACK_IMPORTED_MODULE_0__.CHARGE_AMOUNT.MIN, "\uC5D0\uC11C ").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_0__.CHARGE_AMOUNT.MAX, "\uC6D0 \uC0AC\uC774\uC5EC\uC57C \uD569\uB2C8\uB2E4.")
     },
     {
-        test: function (amount) { return amount % 10 === 0; },
-        errorMessage: '10단위 금액을 입력해주세요'
+        test: function (amount) { return amount % _configs_constants__WEBPACK_IMPORTED_MODULE_0__.CHARGE_AMOUNT.STEP === 0; },
+        errorMessage: "".concat(_configs_constants__WEBPACK_IMPORTED_MODULE_0__.CHARGE_AMOUNT.STEP, "\uC6D0 \uB2E8\uC704\uC758 \uAE08\uC561\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694")
     },
     {
-        test: function (amount, totalMoney) { return amount + totalMoney <= 100000; },
-        errorMessage: '총액은 최대 100000까지 가능합니다'
+        test: function (amount, totalMoney) {
+            return amount + totalMoney <= _configs_constants__WEBPACK_IMPORTED_MODULE_0__.CHARGE_AMOUNT.MAX;
+        },
+        errorMessage: "\uCD1D\uC561\uC740 \uCD5C\uB300 ".concat(_configs_constants__WEBPACK_IMPORTED_MODULE_0__.CHARGE_AMOUNT.MAX, "\uC6D0\uAE4C\uC9C0 \uAC00\uB2A5\uD569\uB2C8\uB2E4")
     },
 ];
 
