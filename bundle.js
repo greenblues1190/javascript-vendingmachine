@@ -2046,7 +2046,7 @@ __webpack_require__.r(__webpack_exports__);
 var Subject = /** @class */ (function () {
     function Subject(key, initValue, checker) {
         if (checker !== Subject.private)
-            return;
+            throw Error('use Subject.observable()');
         this.key = key;
         this.value = initValue;
         this.observers = new Set();
@@ -2112,7 +2112,7 @@ var Subject = /** @class */ (function () {
     Subject.prototype.toString = function () {
         return this.key;
     };
-    Subject.private = Symbol('private checker');
+    Subject.private = Symbol('subject checker');
     Subject.subjects = new Set();
     return Subject;
 }());
