@@ -487,6 +487,348 @@ customElements.define('page-router', Router);
 
 /***/ }),
 
+/***/ "./src/views/components/ChangeChargeForm.js":
+/*!**************************************************!*\
+  !*** ./src/views/components/ChangeChargeForm.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ ChangeChargeForm)
+/* harmony export */ });
+/* harmony import */ var _core_Component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../core/Component */ "./src/core/Component.js");
+/* harmony import */ var _domains_VendingMachine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../domains/VendingMachine */ "./src/domains/VendingMachine.ts");
+/* harmony import */ var _configs_constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../configs/constants */ "./src/configs/constants.ts");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+
+var ChangeChargeForm = /*#__PURE__*/function (_Component) {
+  _inherits(ChangeChargeForm, _Component);
+
+  var _super = _createSuper(ChangeChargeForm);
+
+  function ChangeChargeForm() {
+    _classCallCheck(this, ChangeChargeForm);
+
+    return _super.apply(this, arguments);
+  }
+
+  _createClass(ChangeChargeForm, [{
+    key: "template",
+    value: function template() {
+      return "\n      <form id=\"change-charge-form\" class=\"change-charge-form\">\n        <div>\n          <label for=\"amount\" class=\"description\">\uC790\uD310\uAE30\uAC00 \uBCF4\uC720\uD560 \uAE08\uC561\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694.</label>\n          <input\n            id=\"charge-amount\"\n            class=\"charge-amount-input styled-input\"\n            name=\"amount\"\n            placeholder=\"\uAE08\uC561\"\n            type=\"number\"\n            min=\"".concat(_configs_constants__WEBPACK_IMPORTED_MODULE_2__.CHARGE_AMOUNT.MIN, "\"\n            max=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_2__.CHARGE_AMOUNT.MAX, "\"\n            step=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_2__.CHARGE_AMOUNT.STEP, "\"\n            required\n            autofocus\n          >\n        </div>\n        <button class=\"add-charge-button styled-button emphasized\">\uCDA9\uC804</button>\n      </form>\n    ");
+    }
+  }, {
+    key: "setEvent",
+    value: function setEvent() {
+      var _this = this;
+
+      this.addEvent('submit', '#change-charge-form', function (event) {
+        event.preventDefault();
+
+        var amountInput = _this.querySelector('#charge-amount');
+
+        var amount = amountInput.valueAsNumber;
+
+        try {
+          _domains_VendingMachine__WEBPACK_IMPORTED_MODULE_1__.vendingMachine.addCoin(amount);
+          amountInput.value = '';
+        } catch (err) {
+          window.alert(err);
+        }
+      });
+    }
+  }]);
+
+  return ChangeChargeForm;
+}(_core_Component__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+customElements.define('charge-form', ChangeChargeForm);
+
+/***/ }),
+
+/***/ "./src/views/components/CoinTable.js":
+/*!*******************************************!*\
+  !*** ./src/views/components/CoinTable.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ CoinTable)
+/* harmony export */ });
+/* harmony import */ var _core_Component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../core/Component */ "./src/core/Component.js");
+/* harmony import */ var _domains_VendingMachine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../domains/VendingMachine */ "./src/domains/VendingMachine.ts");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+var CoinTable = /*#__PURE__*/function (_Component) {
+  _inherits(CoinTable, _Component);
+
+  var _super = _createSuper(CoinTable);
+
+  function CoinTable() {
+    _classCallCheck(this, CoinTable);
+
+    return _super.apply(this, arguments);
+  }
+
+  _createClass(CoinTable, [{
+    key: "template",
+    value: function template() {
+      var coins = _domains_VendingMachine__WEBPACK_IMPORTED_MODULE_1__.vendingMachine.useStore(function (state) {
+        return state.coins;
+      });
+
+      var coinArray = _toConsumableArray(Object.entries(coins)).sort(function (_ref, _ref2) {
+        var _ref3 = _slicedToArray(_ref, 1),
+            a = _ref3[0];
+
+        var _ref4 = _slicedToArray(_ref2, 1),
+            b = _ref4[0];
+
+        return b - a;
+      });
+
+      return "\n      <table class=\"styled-table\">\n        <thead>\n          <tr class=\"styled-tr\">\n            <th class=\"styled-th\">\uB3D9\uC804</th>\n            <th class=\"styled-th\">\uAC1C\uC218</th>\n          </tr>\n        </thead>\n        <tbody>\n          ".concat(coinArray.map(function (_ref5) {
+        var _ref6 = _slicedToArray(_ref5, 2),
+            key = _ref6[0],
+            value = _ref6[1];
+
+        return "\n                <tr class=\"styled-tr\">\n                  <td class=\"styled-td\">".concat(key, "\uC6D0</td>\n                  <td class=\"styled-td\">").concat(value, "\uAC1C</td>\n                </tr>\n              ");
+      }).join(''), "\n        </tbody>\n      </table>\n    ");
+    }
+  }]);
+
+  return CoinTable;
+}(_core_Component__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+customElements.define('coin-table', CoinTable);
+
+/***/ }),
+
+/***/ "./src/views/components/CurrentMoneyIndicator.js":
+/*!*******************************************************!*\
+  !*** ./src/views/components/CurrentMoneyIndicator.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ CurrentMoneyIndicator)
+/* harmony export */ });
+/* harmony import */ var _core_Component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../core/Component */ "./src/core/Component.js");
+/* harmony import */ var _domains_VendingMachine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../domains/VendingMachine */ "./src/domains/VendingMachine.ts");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+var CurrentMoneyIndicator = /*#__PURE__*/function (_Component) {
+  _inherits(CurrentMoneyIndicator, _Component);
+
+  var _super = _createSuper(CurrentMoneyIndicator);
+
+  function CurrentMoneyIndicator() {
+    _classCallCheck(this, CurrentMoneyIndicator);
+
+    return _super.apply(this, arguments);
+  }
+
+  _createClass(CurrentMoneyIndicator, [{
+    key: "template",
+    value: function template() {
+      var totalMoney = _domains_VendingMachine__WEBPACK_IMPORTED_MODULE_1__.vendingMachine.getTotalMoney();
+      return "\n      <p class=\"current-money-indicator\">\uD604\uC7AC \uBCF4\uC720 \uAE08\uC561: <span>".concat(totalMoney, "\uC6D0</span></p>\n    ");
+    }
+  }]);
+
+  return CurrentMoneyIndicator;
+}(_core_Component__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+customElements.define('current-money', CurrentMoneyIndicator);
+
+/***/ }),
+
+/***/ "./src/views/components/ItemAddForm.js":
+/*!*********************************************!*\
+  !*** ./src/views/components/ItemAddForm.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ ItemAddForm)
+/* harmony export */ });
+/* harmony import */ var _core_Component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../core/Component */ "./src/core/Component.js");
+/* harmony import */ var _domains_VendingMachine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../domains/VendingMachine */ "./src/domains/VendingMachine.ts");
+/* harmony import */ var _configs_constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../configs/constants */ "./src/configs/constants.ts");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+
+var ItemAddForm = /*#__PURE__*/function (_Component) {
+  _inherits(ItemAddForm, _Component);
+
+  var _super = _createSuper(ItemAddForm);
+
+  function ItemAddForm() {
+    _classCallCheck(this, ItemAddForm);
+
+    return _super.apply(this, arguments);
+  }
+
+  _createClass(ItemAddForm, [{
+    key: "template",
+    value: function template() {
+      return "\n      <form id=\"item-add-form\" class=\"item-add-form\">\n        <fieldset class=\"fieldset\">\n          <legend class=\"description\">\uCD94\uAC00\uD560 \uC0C1\uD488 \uD604\uD669\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694.</legend>\n          <label hidden for=\"name\">".concat(_configs_constants__WEBPACK_IMPORTED_MODULE_2__.ITEM.NAME.LABEL, "</label>\n          <input\n            id=\"item-name-input\"\n            class=\"item-input styled-input\"\n            name=\"name\"\n            placeholder=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_2__.ITEM.NAME.LABEL, "\"\n            type=\"text\"\n            maxlength=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_2__.ITEM.NAME.LENGTH.MAX, "\"\n            required\n            autofocus\n          >\n          <label hidden for=\"price\">").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_2__.ITEM.PRICE.LABEL, "</label>\n          <input\n            id=\"item-price-input\"\n            class=\"item-input styled-input\"\n            name=\"price\"\n            placeholder=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_2__.ITEM.PRICE.LABEL, "\"\n            type=\"number\"\n            min=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_2__.ITEM.PRICE.MIN, "\"\n            max=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_2__.ITEM.PRICE.MAX, "\"\n            step=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_2__.ITEM.PRICE.STEP, "\"\n            required\n          >\n          <label hidden for=\"quantity\">").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_2__.ITEM.QUANTITY.LABEL, "</label>\n          <input\n            id=\"item-quantity-input\"\n            class=\"item-input styled-input\"\n            name=\"quantity\"\n            placeholder=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_2__.ITEM.QUANTITY.LABEL, "\"\n            type=\"number\"\n            min=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_2__.ITEM.QUANTITY.MIN, "\"\n            max=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_2__.ITEM.QUANTITY.MAX, "\"\n            step=\"1\"\n            required\n          >\n        </fieldset>\n        <button class=\"add-item-button styled-button emphasized\">\uCD94\uAC00</button>\n      </form>\n    ");
+    }
+  }, {
+    key: "setEvent",
+    value: function setEvent() {
+      this.addEvent('submit', '#item-add-form', function (event) {
+        event.preventDefault();
+        var target = event.target;
+        var nameInput = target.querySelector('#item-name-input');
+        var priceInput = target.querySelector('#item-price-input');
+        var quantityInput = target.querySelector('#item-quantity-input');
+        var item = {
+          name: nameInput.value.trim(),
+          price: priceInput.valueAsNumber,
+          quantity: quantityInput.valueAsNumber
+        };
+
+        try {
+          _domains_VendingMachine__WEBPACK_IMPORTED_MODULE_1__.vendingMachine.addItem(item);
+          nameInput.value = '';
+          priceInput.value = '';
+          quantityInput.value = '';
+        } catch (err) {
+          window.alert(err);
+        }
+      });
+    }
+  }]);
+
+  return ItemAddForm;
+}(_core_Component__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+customElements.define('add-form', ItemAddForm);
+
+/***/ }),
+
 /***/ "./src/views/components/ItemRow.js":
 /*!*****************************************!*\
   !*** ./src/views/components/ItemRow.js ***!
@@ -606,6 +948,81 @@ customElements.define('item-row', ItemRow, {
 
 /***/ }),
 
+/***/ "./src/views/components/ItemTable.js":
+/*!*******************************************!*\
+  !*** ./src/views/components/ItemTable.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ ItemTable)
+/* harmony export */ });
+/* harmony import */ var _core_Component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../core/Component */ "./src/core/Component.js");
+/* harmony import */ var _ItemRow__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ItemRow */ "./src/views/components/ItemRow.js");
+/* harmony import */ var _domains_VendingMachine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../domains/VendingMachine */ "./src/domains/VendingMachine.ts");
+/* harmony import */ var _configs_constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../configs/constants */ "./src/configs/constants.ts");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+
+
+var ItemTable = /*#__PURE__*/function (_Component) {
+  _inherits(ItemTable, _Component);
+
+  var _super = _createSuper(ItemTable);
+
+  function ItemTable() {
+    _classCallCheck(this, ItemTable);
+
+    return _super.apply(this, arguments);
+  }
+
+  _createClass(ItemTable, [{
+    key: "template",
+    value: function template() {
+      var items = _domains_VendingMachine__WEBPACK_IMPORTED_MODULE_2__.vendingMachine.useStore(function (state) {
+        return state.items;
+      });
+      return "\n      <table class=\"styled-table\">\n        <colgroup>\n          <col style=\"width: 25%\">\n          <col style=\"width: 25%\">\n          <col style=\"width: 25%\">\n          <col style=\"width: 25%\">\n        </colgroup>\n        <thead>\n          <tr class=\"styled-tr\">\n            <th class=\"styled-th\">".concat(_configs_constants__WEBPACK_IMPORTED_MODULE_3__.ITEM.NAME.LABEL, "</th>\n            <th class=\"styled-th\">").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_3__.ITEM.PRICE.LABEL, "</th>\n            <th class=\"styled-th\">").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_3__.ITEM.QUANTITY.LABEL, "</th>\n            <th class=\"styled-th\"></th>\n          </tr>\n        </thead>\n      </table>\n      <div class=\"scrollable\">\n        <table class=\"styled-table no-border-top\">\n          <colgroup>\n            <col style=\"width: 25%\">\n            <col style=\"width: 25%\">\n            <col style=\"width: 25%\">\n            <col style=\"width: 25%\">\n          </colgroup>\n          <tbody>\n            ").concat(items.map(function (_ref) {
+        var name = _ref.name,
+            price = _ref.price,
+            quantity = _ref.quantity;
+        return "\n                  <tr\n                    is=\"item-row\"\n                    class=\"styled-tr\"\n                    name=\"".concat(name, "\"\n                    price=\"").concat(price, "\"\n                    quantity=\"").concat(quantity, "\"\n                  >\n                  </tr>\n                ");
+      }).join(''), "\n          </tbody>\n        </table>\n      </div>\n    ");
+    }
+  }]);
+
+  return ItemTable;
+}(_core_Component__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+customElements.define('item-table', ItemTable);
+
+/***/ }),
+
 /***/ "./src/views/components/NavBar.js":
 /*!****************************************!*\
   !*** ./src/views/components/NavBar.js ***!
@@ -701,29 +1118,10 @@ customElements.define('nav-bar', NavBar);
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core_Component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../core/Component */ "./src/core/Component.js");
-/* harmony import */ var _domains_VendingMachine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../domains/VendingMachine */ "./src/domains/VendingMachine.ts");
-/* harmony import */ var _configs_constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../configs/constants */ "./src/configs/constants.ts");
+/* harmony import */ var _components_ChangeChargeForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/ChangeChargeForm */ "./src/views/components/ChangeChargeForm.js");
+/* harmony import */ var _components_CurrentMoneyIndicator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/CurrentMoneyIndicator */ "./src/views/components/CurrentMoneyIndicator.js");
+/* harmony import */ var _components_CoinTable__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/CoinTable */ "./src/views/components/CoinTable.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -744,6 +1142,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
 
 
 
@@ -763,45 +1162,7 @@ var ChangeChargePage = /*#__PURE__*/function (_Component) {
   _createClass(ChangeChargePage, [{
     key: "template",
     value: function template() {
-      var coins = _domains_VendingMachine__WEBPACK_IMPORTED_MODULE_1__.vendingMachine.useStore(function (state) {
-        return state.coins;
-      });
-
-      var coinArray = _toConsumableArray(Object.entries(coins)).sort(function (_ref, _ref2) {
-        var _ref3 = _slicedToArray(_ref, 1),
-            a = _ref3[0];
-
-        var _ref4 = _slicedToArray(_ref2, 1),
-            b = _ref4[0];
-
-        return b - a;
-      });
-
-      var totalMoney = _domains_VendingMachine__WEBPACK_IMPORTED_MODULE_1__.vendingMachine.getTotalMoney();
-      return "\n      <section>\n        <h2 hidden>\uC794\uB3C8 \uCDA9\uC804</h2>\n        <form id=\"change-charge-form\" class=\"change-charge-form\">\n          <div>\n            <label for=\"amount\" class=\"description\">\uC790\uD310\uAE30\uAC00 \uBCF4\uC720\uD560 \uAE08\uC561\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694.</label>\n            <input\n              id=\"charge-amount\"\n              class=\"charge-amount-input styled-input\"\n              name=\"amount\"\n              placeholder=\"\uAE08\uC561\"\n              type=\"number\"\n              min=\"".concat(_configs_constants__WEBPACK_IMPORTED_MODULE_2__.CHARGE_AMOUNT.MIN, "\"\n              max=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_2__.CHARGE_AMOUNT.MAX, "\"\n              step=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_2__.CHARGE_AMOUNT.STEP, "\"\n              required\n              autofocus\n            >\n          </div>\n          <button class=\"add-charge-button styled-button emphasized\">\uCDA9\uC804</button>\n        </form>\n        <p class=\"current-money-indicator\">\uD604\uC7AC \uBCF4\uC720 \uAE08\uC561: <span>").concat(totalMoney, "\uC6D0</span></p>\n      </section>\n      <section>\n        <h2 class=\"table-title\">\uC790\uD310\uAE30\uAC00 \uBCF4\uC720\uD55C \uB3D9\uC804</h2>\n        <table class=\"styled-table\">\n          <thead>\n            <tr class=\"styled-tr\">\n              <th class=\"styled-th\">\uB3D9\uC804</th>\n              <th class=\"styled-th\">\uAC1C\uC218</th>\n            </tr>\n          </thead>\n          <tbody>\n            ").concat(coinArray.map(function (_ref5) {
-        var _ref6 = _slicedToArray(_ref5, 2),
-            key = _ref6[0],
-            value = _ref6[1];
-
-        return "\n                  <tr class=\"styled-tr\">\n                    <td class=\"styled-td\">".concat(key, "\uC6D0</td>\n                    <td class=\"styled-td\">").concat(value, "\uAC1C</td>\n                  </tr>\n                ");
-      }).join(''), "\n          </tbody>\n        </table>\n      </section>\n    ");
-    }
-  }, {
-    key: "setEvent",
-    value: function setEvent() {
-      var _this = this;
-
-      this.addEvent('submit', '#change-charge-form', function (event) {
-        event.preventDefault();
-
-        var chargeAmount = _this.querySelector('#charge-amount').valueAsNumber;
-
-        try {
-          _domains_VendingMachine__WEBPACK_IMPORTED_MODULE_1__.vendingMachine.addCoin(chargeAmount);
-        } catch (err) {
-          window.alert(err);
-        }
-      });
+      return "\n      <section>\n        <h2 hidden>\uC794\uB3C8 \uCDA9\uC804</h2>\n        <charge-form></charge-form>\n        <current-money></current-money>\n      </section>\n      <section>\n        <h2 class=\"table-title\">\uC790\uD310\uAE30\uAC00 \uBCF4\uC720\uD55C \uB3D9\uC804</h2>\n        <coin-table></coin-table>\n      </section>\n    ";
     }
   }]);
 
@@ -820,9 +1181,8 @@ customElements.define('change-charge', ChangeChargePage);
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core_Component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../core/Component */ "./src/core/Component.js");
-/* harmony import */ var _components_ItemRow__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/ItemRow */ "./src/views/components/ItemRow.js");
-/* harmony import */ var _domains_VendingMachine__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../domains/VendingMachine */ "./src/domains/VendingMachine.ts");
-/* harmony import */ var _configs_constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../configs/constants */ "./src/configs/constants.ts");
+/* harmony import */ var _components_ItemAddForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/ItemAddForm */ "./src/views/components/ItemAddForm.js");
+/* harmony import */ var _components_ItemTable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/ItemTable */ "./src/views/components/ItemTable.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -849,7 +1209,6 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
-
 var ItemManagementPage = /*#__PURE__*/function (_Component) {
   _inherits(ItemManagementPage, _Component);
 
@@ -864,34 +1223,7 @@ var ItemManagementPage = /*#__PURE__*/function (_Component) {
   _createClass(ItemManagementPage, [{
     key: "template",
     value: function template() {
-      var items = _domains_VendingMachine__WEBPACK_IMPORTED_MODULE_2__.vendingMachine.useStore(function (state) {
-        return state.items;
-      });
-      return "\n      <section>\n        <h2 hidden>\uCD94\uAC00\uD560 \uC0C1\uD488 \uC815\uBCF4</h2>\n        <form id=\"item-add-form\" class=\"item-add-form\">\n          <fieldset class=\"fieldset\">\n            <legend class=\"description\">\uCD94\uAC00\uD560 \uC0C1\uD488 \uD604\uD669\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694.</legend>\n            <label hidden for=\"name\">".concat(_configs_constants__WEBPACK_IMPORTED_MODULE_3__.ITEM.NAME.LABEL, "</label>\n            <input\n              id=\"item-name-input\"\n              class=\"item-input styled-input\"\n              name=\"name\"\n              placeholder=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_3__.ITEM.NAME.LABEL, "\"\n              type=\"text\"\n              maxlength=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_3__.ITEM.NAME.LENGTH.MAX, "\"\n              required\n              autofocus\n            >\n            <label hidden for=\"price\">").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_3__.ITEM.PRICE.LABEL, "</label>\n            <input\n              id=\"item-price-input\"\n              class=\"item-input styled-input\"\n              name=\"price\"\n              placeholder=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_3__.ITEM.PRICE.LABEL, "\"\n              type=\"number\"\n              min=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_3__.ITEM.PRICE.MIN, "\"\n              max=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_3__.ITEM.PRICE.MAX, "\"\n              step=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_3__.ITEM.PRICE.STEP, "\"\n              required\n            >\n            <label hidden for=\"quantity\">").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_3__.ITEM.QUANTITY.LABEL, "</label>\n            <input\n              id=\"item-quantity-input\"\n              class=\"item-input styled-input\"\n              name=\"quantity\"\n              placeholder=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_3__.ITEM.QUANTITY.LABEL, "\"\n              type=\"number\"\n              min=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_3__.ITEM.QUANTITY.MIN, "\"\n              max=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_3__.ITEM.QUANTITY.MAX, "\"\n              step=\"1\"\n              required\n            >\n          </fieldset>\n          <button class=\"add-item-button styled-button emphasized\">\uCD94\uAC00</button>\n        </form>\n      </section>\n      <section>\n        <h2 class=\"table-title\">\uC0C1\uD488 \uD604\uD669</h2>\n        <table class=\"styled-table\">\n          <colgroup>\n            <col style=\"width: 25%\">\n            <col style=\"width: 25%\">\n            <col style=\"width: 25%\">\n            <col style=\"width: 25%\">\n          </colgroup>\n          <thead>\n            <tr class=\"styled-tr\">\n              <th class=\"styled-th\">").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_3__.ITEM.NAME.LABEL, "</th>\n              <th class=\"styled-th\">").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_3__.ITEM.PRICE.LABEL, "</th>\n              <th class=\"styled-th\">").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_3__.ITEM.QUANTITY.LABEL, "</th>\n              <th class=\"styled-th\"></th>\n            </tr>\n          </thead>\n        </table>\n        <div class=\"scrollable\">\n          <table class=\"styled-table no-border-top\">\n            <colgroup>\n              <col style=\"width: 25%\">\n              <col style=\"width: 25%\">\n              <col style=\"width: 25%\">\n              <col style=\"width: 25%\">\n            </colgroup>\n            <tbody>\n              ").concat(items.map(function (_ref) {
-        var name = _ref.name,
-            price = _ref.price,
-            quantity = _ref.quantity;
-        return "\n                    <tr\n                      is=\"item-row\"\n                      class=\"styled-tr\"\n                      name=\"".concat(name, "\"\n                      price=\"").concat(price, "\"\n                      quantity=\"").concat(quantity, "\"\n                    >\n                    </tr>\n                  ");
-      }).join(''), "\n            </tbody>\n          </table>\n        </div>\n      </section>\n    ");
-    }
-  }, {
-    key: "setEvent",
-    value: function setEvent() {
-      this.addEvent('submit', '#item-add-form', function (event) {
-        event.preventDefault();
-        var target = event.target;
-        var item = {
-          name: target.querySelector('#item-name-input').value.trim(),
-          price: target.querySelector('#item-price-input').valueAsNumber,
-          quantity: target.querySelector('#item-quantity-input').valueAsNumber
-        };
-
-        try {
-          _domains_VendingMachine__WEBPACK_IMPORTED_MODULE_2__.vendingMachine.addItem(item);
-        } catch (err) {
-          window.alert(err);
-        }
-      });
+      return "\n      <section>\n        <h2 hidden>\uCD94\uAC00\uD560 \uC0C1\uD488 \uC815\uBCF4</h2>\n        <add-form></add-form>\n      </section>\n      <section>\n        <h2 class=\"table-title\">\uC0C1\uD488 \uD604\uD669</h2>\n        <item-table></item-table>\n      </section>\n    ";
     }
   }]);
 
