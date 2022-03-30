@@ -1,5 +1,1 @@
-export declare const getHash: (target?: {
-    location: {
-        href: string;
-    };
-}) => string;
+export declare const getPathname: (target?: Window & typeof globalThis) => string;

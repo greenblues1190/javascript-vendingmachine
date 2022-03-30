@@ -12,7 +12,7 @@ export default class Subject {
     private value;
     private observers;
     private updated;
-    constructor(key: string, initValue: any, checker: symbol);
+    constructor(key: string, value: any, checker: symbol);
     get(): any;
     set(newValue: any): void;
     observe(observer: Observer): void;

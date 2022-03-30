@@ -12,11 +12,11 @@ export interface Coins {
 export interface VendingMachineState {
     items: Item[];
     coins: Coins;
+    location: string;
 }
 export default class VendingMachine {
     state: VendingMachineState;
-    constructor(initItems: Item[], initCoins: Coins);
-    init(initItems: Item[], initCoins: Coins): void;
+    constructor(items: Item[], coins: Coins, location?: string);
     useStore(callback: Function): any;
     addItem(item: Item): void;
     updateItem(name: string, updatedItem: Item): void;
@@ -24,5 +24,6 @@ export default class VendingMachine {
     findItem(name: string): Item | null;
     addCoin(amount: number): void;
     getTotalMoney(): number;
+    setLocation(location: any): void;
 }
 export declare const vendingMachine: VendingMachine;

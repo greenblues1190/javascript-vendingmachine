@@ -335,7 +335,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pages_ItemPurchasePage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pages/ItemPurchasePage */ "./src/views/pages/ItemPurchasePage.js");
 /* harmony import */ var _pages_NotFoundPage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pages/NotFoundPage */ "./src/views/pages/NotFoundPage.js");
 /* harmony import */ var _components_NavBar__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/NavBar */ "./src/views/components/NavBar.js");
-/* harmony import */ var _configs_constants__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../configs/constants */ "./src/configs/constants.ts");
+/* harmony import */ var _domains_VendingMachine__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../domains/VendingMachine */ "./src/domains/VendingMachine.ts");
+/* harmony import */ var _utils_domUtils__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/domUtils */ "./src/utils/domUtils.ts");
+/* harmony import */ var _configs_constants__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../configs/constants */ "./src/configs/constants.ts");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -367,6 +369,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
+
 var App = /*#__PURE__*/function (_Component) {
   _inherits(App, _Component);
 
@@ -379,9 +383,21 @@ var App = /*#__PURE__*/function (_Component) {
   }
 
   _createClass(App, [{
+    key: "setup",
+    value: function setup() {
+      _domains_VendingMachine__WEBPACK_IMPORTED_MODULE_7__.vendingMachine.setLocation((0,_utils_domUtils__WEBPACK_IMPORTED_MODULE_8__.getPathname)());
+    }
+  }, {
     key: "template",
     value: function template() {
-      return "\n      <main class=\"app-container\">\n        <header>\n          <h1 class=\"title\">\uD83C\uDF7F \uC790\uD310\uAE30 \uD83C\uDF7F</h1>\n        </header>\n        <nav-bar class=\"nav-bar\"></nav-bar>\n        <div class=\"page-container\">\n          <page-router>\n            <item-management class=\"page\" path=\"".concat(_configs_constants__WEBPACK_IMPORTED_MODULE_7__.PAGES.ITEM_MANAGEMENT.PATH, "\"></item-management>\n            <change-charge class=\"page\" path=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_7__.PAGES.CHANGE_CHARGE.PATH, "\"></change-charge>\n            <item-purchase class=\"page\" path=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_7__.PAGES.ITEM_PURCHASE.PATH, "\"></item-purchase>\n            <not-found class=\"page\" path=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_7__.PAGES.DEFAULT.PATH, "\"></not-found>\n          </page-router>\n        </div>\n      </main>\n    ");
+      return "\n      <main class=\"app-container\">\n        <header>\n          <h1 class=\"title\">\uD83C\uDF7F \uC790\uD310\uAE30 \uD83C\uDF7F</h1>\n        </header>\n        <nav-bar class=\"nav-bar\"></nav-bar>\n        <div class=\"page-container\">\n          <page-router>\n            <item-management class=\"page\" path=\"".concat(_configs_constants__WEBPACK_IMPORTED_MODULE_9__.PAGES.ITEM_MANAGEMENT.PATH, "\"></item-management>\n            <change-charge class=\"page\" path=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_9__.PAGES.CHANGE_CHARGE.PATH, "\"></change-charge>\n            <item-purchase class=\"page\" path=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_9__.PAGES.ITEM_PURCHASE.PATH, "\"></item-purchase>\n            <not-found class=\"page\" path=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_9__.PAGES.DEFAULT.PATH, "\"></not-found>\n          </page-router>\n        </div>\n      </main>\n    ");
+    }
+  }, {
+    key: "setEvent",
+    value: function setEvent() {
+      window.addEventListener('popstate', function (event) {
+        _domains_VendingMachine__WEBPACK_IMPORTED_MODULE_7__.vendingMachine.setLocation((0,_utils_domUtils__WEBPACK_IMPORTED_MODULE_8__.getPathname)(event.path[0]));
+      });
     }
   }]);
 
@@ -401,7 +417,7 @@ customElements.define('app-wrapper', App);
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core_Component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/Component */ "./src/core/Component.js");
-/* harmony import */ var _utils_domUtils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/domUtils */ "./src/utils/domUtils.ts");
+/* harmony import */ var _domains_VendingMachine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../domains/VendingMachine */ "./src/domains/VendingMachine.ts");
 /* harmony import */ var _configs_constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../configs/constants */ "./src/configs/constants.ts");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
@@ -450,33 +466,22 @@ var Router = /*#__PURE__*/function (_Component) {
         };
       });
       this.state = {
-        routes: routes,
-        location: (0,_utils_domUtils__WEBPACK_IMPORTED_MODULE_1__.getHash)()
+        routes: routes
       };
     }
   }, {
     key: "render",
     value: function render() {
-      var _this$state = this.state,
-          routes = _this$state.routes,
-          location = _this$state.location;
+      var location = _domains_VendingMachine__WEBPACK_IMPORTED_MODULE_1__.vendingMachine.useStore(function (state) {
+        return state.location;
+      });
+      var routes = this.state.routes;
       var currentRoute = routes.filter(function (route) {
         return route.path === location || route.path === _configs_constants__WEBPACK_IMPORTED_MODULE_2__.PAGES.DEFAULT.PATH;
       })[0];
       var component = location === '' && routes[0].component || (currentRoute === null || currentRoute === void 0 ? void 0 : currentRoute.component);
       this.clearDOM();
       this.appendChild(component);
-    }
-  }, {
-    key: "setEvent",
-    value: function setEvent() {
-      var _this = this;
-
-      window.addEventListener('hashchange', function (event) {
-        _this.setState({
-          location: (0,_utils_domUtils__WEBPACK_IMPORTED_MODULE_1__.getHash)(event.target)
-        });
-      });
     }
   }]);
 
@@ -891,7 +896,12 @@ var ItemRow = /*#__PURE__*/function (_TableRow) {
           price = _this$props.price,
           quantity = _this$props.quantity;
       var isEditing = this.state.isEditing;
-      return "\n       ".concat(isEditing ? "\n            <td class=\"item-name styled-td\">\n              <input\n                value=\"".concat(name, "\"\n                class=\"item-name-edit-input transparent-input\"\n                type=\"text\"\n                maxlength=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_2__.ITEM.NAME.LENGTH.MAX, "\"\n              >\n            </td>\n            <td class=\"item-price styled-td\">\n              <input\n                value=\"").concat(price, "\"\n                class=\"item-price-edit-input transparent-input\"\n                type=\"number\"\n                min=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_2__.ITEM.PRICE.MIN, "\"\n                max=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_2__.ITEM.PRICE.MAX, "\"\n                step=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_2__.ITEM.PRICE.STEP, "\"\n              >\n            </td>\n            <td class=\"item-quantity styled-td\">\n              <input\n                value=\"").concat(quantity, "\"\n                class=\"item-quantity-edit-input transparent-input\"\n                type=\"number\"\n                step=\"1\"\n                min=\"1\"\n                max=\"20\"\n              >\n            </td>\n            <td class=\"item-button-container\">\n              <button class=\"item-update-button styled-button\">\uC644\uB8CC</button>\n            </td>\n          ") : "\n            <td class=\"item-name styled-td\">".concat(name, "</td>\n            <td class=\"item-price styled-td\">").concat(price, "</td>\n            <td class=\"item-quantity styled-td\">").concat(quantity, "</td>\n            <td class=\"item-button-container\">\n              <button class=\"item-edit-button styled-button\" type=\"button\">\uC218\uC815</button>\n              <button class=\"item-remove-button styled-button\" type=\"button\">\uC0AD\uC81C</button>\n            </td>\n          "), "\n    ");
+
+      if (isEditing) {
+        return "\n        <td class=\"item-name styled-td\">\n          <input\n            value=\"".concat(name, "\"\n            class=\"item-name-edit-input transparent-input\"\n            type=\"text\"\n            maxlength=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_2__.ITEM.NAME.LENGTH.MAX, "\"\n          >\n        </td>\n        <td class=\"item-price styled-td\">\n          <input\n            value=\"").concat(price, "\"\n            class=\"item-price-edit-input transparent-input\"\n            type=\"number\"\n            min=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_2__.ITEM.PRICE.MIN, "\"\n            max=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_2__.ITEM.PRICE.MAX, "\"\n            step=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_2__.ITEM.PRICE.STEP, "\"\n          >\n        </td>\n        <td class=\"item-quantity styled-td\">\n          <input\n            value=\"").concat(quantity, "\"\n            class=\"item-quantity-edit-input transparent-input\"\n            type=\"number\"\n            step=\"1\"\n            min=\"1\"\n            max=\"20\"\n          >\n        </td>\n        <td class=\"item-button-container\">\n          <button class=\"item-update-button styled-button\">\uC644\uB8CC</button>\n        </td>\n      ");
+      }
+
+      return "\n      <td class=\"item-name styled-td\">".concat(name, "</td>\n      <td class=\"item-price styled-td\">").concat(price, "</td>\n      <td class=\"item-quantity styled-td\">").concat(quantity, "</td>\n      <td class=\"item-button-container\">\n        <button class=\"item-edit-button styled-button\" type=\"button\">\uC218\uC815</button>\n        <button class=\"item-remove-button styled-button\" type=\"button\">\uC0AD\uC81C</button>\n      </td>\n    ");
     }
   }, {
     key: "setEvent",
@@ -1034,8 +1044,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ NavBar)
 /* harmony export */ });
 /* harmony import */ var _core_Component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../core/Component */ "./src/core/Component.js");
-/* harmony import */ var _configs_constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../configs/constants */ "./src/configs/constants.ts");
-/* harmony import */ var _utils_domUtils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/domUtils */ "./src/utils/domUtils.ts");
+/* harmony import */ var _domains_VendingMachine__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../domains/VendingMachine */ "./src/domains/VendingMachine.ts");
+/* harmony import */ var _configs_constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../configs/constants */ "./src/configs/constants.ts");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1074,30 +1084,24 @@ var NavBar = /*#__PURE__*/function (_Component) {
   }
 
   _createClass(NavBar, [{
-    key: "setup",
-    value: function setup() {
-      this.state = {
-        location: (0,_utils_domUtils__WEBPACK_IMPORTED_MODULE_2__.getHash)()
-      };
-    }
-  }, {
     key: "template",
     value: function template() {
-      var location = this.state.location;
-      return "\n      <a\n        class=\"nav-button styled-button ".concat(location === _configs_constants__WEBPACK_IMPORTED_MODULE_1__.PAGES.LANDING.PATH || location === _configs_constants__WEBPACK_IMPORTED_MODULE_1__.PAGES.ITEM_MANAGEMENT.PATH ? 'selected' : '', "\"\n        href=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_1__.PAGES.ITEM_MANAGEMENT.PATH, "\"\n      >\n        ").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_1__.PAGES.ITEM_MANAGEMENT.TITLE, "\n      </a>\n      <a\n        class=\"nav-button styled-button ").concat(location === _configs_constants__WEBPACK_IMPORTED_MODULE_1__.PAGES.CHANGE_CHARGE.PATH ? 'selected' : '', "\"\n        href=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_1__.PAGES.CHANGE_CHARGE.PATH, "\"\n      >\n        ").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_1__.PAGES.CHANGE_CHARGE.TITLE, "\n      </a>\n      <a\n        class=\"nav-button styled-button ").concat(location === _configs_constants__WEBPACK_IMPORTED_MODULE_1__.PAGES.ITEM_PURCHASE.PATH ? 'selected' : '', "\"\n        href=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_1__.PAGES.ITEM_PURCHASE.PATH, "\"\n      >\n        ").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_1__.PAGES.ITEM_PURCHASE.TITLE, "\n      </a>\n    ");
+      var location = _domains_VendingMachine__WEBPACK_IMPORTED_MODULE_1__.vendingMachine.useStore(function (state) {
+        return state.location;
+      });
+      return "\n      <a\n        class=\"nav-button styled-button ".concat(location === _configs_constants__WEBPACK_IMPORTED_MODULE_2__.PAGES.LANDING.PATH || location === _configs_constants__WEBPACK_IMPORTED_MODULE_2__.PAGES.ITEM_MANAGEMENT.PATH ? 'selected' : '', "\"\n        href=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_2__.PAGES.ITEM_MANAGEMENT.PATH, "\"\n      >\n        ").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_2__.PAGES.ITEM_MANAGEMENT.TITLE, "\n      </a>\n      <a\n        class=\"nav-button styled-button ").concat(location === _configs_constants__WEBPACK_IMPORTED_MODULE_2__.PAGES.CHANGE_CHARGE.PATH ? 'selected' : '', "\"\n        href=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_2__.PAGES.CHANGE_CHARGE.PATH, "\"\n      >\n        ").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_2__.PAGES.CHANGE_CHARGE.TITLE, "\n      </a>\n      <a\n        class=\"nav-button styled-button ").concat(location === _configs_constants__WEBPACK_IMPORTED_MODULE_2__.PAGES.ITEM_PURCHASE.PATH ? 'selected' : '', "\"\n        href=\"").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_2__.PAGES.ITEM_PURCHASE.PATH, "\"\n      >\n        ").concat(_configs_constants__WEBPACK_IMPORTED_MODULE_2__.PAGES.ITEM_PURCHASE.TITLE, "\n      </a>\n    ");
     }
   }, {
     key: "setEvent",
     value: function setEvent() {
-      var _this = this;
-
-      this.addEvent('click', '.nav-button', function (_ref) {
-        var target = _ref.target;
-        var location = target.getAttribute('href');
-
-        _this.setState({
-          location: location
-        });
+      this.addEvent('click', '.nav-button', function (event) {
+        event.preventDefault();
+        var to = event.target.getAttribute('href');
+        var state = {};
+        window.history.pushState(state, '', to);
+        dispatchEvent(new PopStateEvent('popstate', {
+          state: state
+        }));
       });
     }
   }]);
@@ -2005,24 +2009,30 @@ var ITEM = {
     }
 };
 var COIN = {
-    VALUES: [10, 50, 100, 500]
+    VALUES: [10, 50, 100, 500],
+    EMPTY_COINS: {
+        10: 0,
+        50: 0,
+        100: 0,
+        500: 0
+    }
 };
 var PAGES = {
     LANDING: {
         TITLE: '',
-        PATH: ''
+        PATH: '/'
     },
     ITEM_MANAGEMENT: {
         TITLE: '상품 관리',
-        PATH: '#item-management'
+        PATH: '/item-management'
     },
     CHANGE_CHARGE: {
         TITLE: '잔돈 충전',
-        PATH: '#change-charge'
+        PATH: '/change-charge'
     },
     ITEM_PURCHASE: {
         TITLE: '상품 구매',
-        PATH: '#item-purchase'
+        PATH: '/item-purchase'
     },
     DEFAULT: {
         TITLE: '',
@@ -2044,11 +2054,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 var Subject = /** @class */ (function () {
-    function Subject(key, initValue, checker) {
+    function Subject(key, value, checker) {
         if (checker !== Subject.private)
             throw Error('use Subject.observable()');
         this.key = key;
-        this.value = initValue;
+        this.value = value;
         this.observers = new Set();
         this.updated = false;
         Object.seal(this);
@@ -2136,6 +2146,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_commons__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/commons */ "./src/utils/commons.ts");
 /* harmony import */ var _utils_coinUtils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/coinUtils */ "./src/utils/coinUtils.ts");
 /* harmony import */ var _utils_validator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/validator */ "./src/utils/validator.ts");
+/* harmony import */ var _configs_constants__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../configs/constants */ "./src/configs/constants.ts");
 var __assign = (undefined && undefined.__assign) || function () {
     __assign = Object.assign || function(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -2160,16 +2171,12 @@ var __spreadArray = (undefined && undefined.__spreadArray) || function (to, from
 
 
 
+
 var VendingMachine = /** @class */ (function () {
-    function VendingMachine(initItems, initCoins) {
-        this.init(initItems, initCoins);
+    function VendingMachine(items, coins, location) {
+        if (location === void 0) { location = '/'; }
+        this.state = _core_Subject__WEBPACK_IMPORTED_MODULE_0__["default"].observable({ items: items, coins: coins, location: location });
     }
-    VendingMachine.prototype.init = function (initItems, initCoins) {
-        this.state = _core_Subject__WEBPACK_IMPORTED_MODULE_0__["default"].observable({
-            items: initItems,
-            coins: initCoins
-        });
-    };
     VendingMachine.prototype.useStore = function (callback) {
         return (0,_utils_commons__WEBPACK_IMPORTED_MODULE_1__.deepClone)(callback(this.state));
     };
@@ -2180,9 +2187,7 @@ var VendingMachine = /** @class */ (function () {
             return;
         }
         (0,_utils_validator__WEBPACK_IMPORTED_MODULE_3__.validate)(_utils_validator__WEBPACK_IMPORTED_MODULE_3__.itemValidator, item);
-        var newItem = prevItem
-            ? __assign(__assign({}, prevItem), { price: item.price, quantity: prevItem.quantity + item.quantity }) : item;
-        this.state.items = __spreadArray(__spreadArray([], this.state.items, true), [newItem], false);
+        this.state.items = __spreadArray(__spreadArray([], this.state.items, true), [item], false);
     };
     VendingMachine.prototype.updateItem = function (name, updatedItem) {
         (0,_utils_validator__WEBPACK_IMPORTED_MODULE_3__.validate)(_utils_validator__WEBPACK_IMPORTED_MODULE_3__.itemValidator, updatedItem);
@@ -2196,21 +2201,16 @@ var VendingMachine = /** @class */ (function () {
         this.state.items = this.state.items.filter(function (item) { return item.name !== name; });
     };
     VendingMachine.prototype.findItem = function (name) {
-        return this.state.items.filter(function (item) { return item.name === name; })[0] || null;
+        return this.state.items.find(function (item) { return item.name === name; }) || null;
     };
     VendingMachine.prototype.addCoin = function (amount) {
         var _this = this;
         (0,_utils_validator__WEBPACK_IMPORTED_MODULE_3__.validate)(_utils_validator__WEBPACK_IMPORTED_MODULE_3__.amountValidator, amount, this.getTotalMoney());
         var randomCoins = (0,_utils_coinUtils__WEBPACK_IMPORTED_MODULE_2__.createRandomCoins)(amount);
-        var updatedCoins = {
-            10: 0,
-            50: 0,
-            100: 0,
-            500: 0
-        };
-        Object.keys(this.state.coins).forEach(function (key) {
-            updatedCoins[key] = _this.state.coins[key] + randomCoins[key];
-        });
+        var updatedCoins = Object.keys(this.state.coins).reduce(function (next, key) {
+            var _a;
+            return (__assign(__assign({}, next), (_a = {}, _a[key] = _this.state.coins[key] + randomCoins[key], _a)));
+        }, _configs_constants__WEBPACK_IMPORTED_MODULE_4__.COIN.EMPTY_COINS);
         this.state.coins = updatedCoins;
     };
     VendingMachine.prototype.getTotalMoney = function () {
@@ -2219,15 +2219,13 @@ var VendingMachine = /** @class */ (function () {
             return sum + Number(key) * value;
         }, 0);
     };
+    VendingMachine.prototype.setLocation = function (location) {
+        this.state.location = location;
+    };
     return VendingMachine;
 }());
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (VendingMachine);
-var vendingMachine = new VendingMachine([], {
-    10: 0,
-    50: 0,
-    100: 0,
-    500: 0
-});
+var vendingMachine = new VendingMachine([], _configs_constants__WEBPACK_IMPORTED_MODULE_4__.COIN.EMPTY_COINS);
 
 
 /***/ }),
@@ -2246,19 +2244,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _commons__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./commons */ "./src/utils/commons.ts");
 
 
-var emptyCoins = {
-    10: 0,
-    50: 0,
-    100: 0,
-    500: 0
-};
 var getRandomCoin = function () {
     var coinValueList = _configs_constants__WEBPACK_IMPORTED_MODULE_0__.COIN.VALUES;
     var randomIndex = Math.floor(Math.random() * 4);
     return coinValueList[randomIndex];
 };
 var createRandomCoins = function (amount) {
-    var coins = (0,_commons__WEBPACK_IMPORTED_MODULE_1__.deepClone)(emptyCoins);
+    var coins = (0,_commons__WEBPACK_IMPORTED_MODULE_1__.deepClone)(_configs_constants__WEBPACK_IMPORTED_MODULE_0__.COIN.EMPTY_COINS);
     var sum = 0;
     while (sum !== amount) {
         var randomCoin = getRandomCoin();
@@ -2359,11 +2351,11 @@ var deepClone = function (obj) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "getHash": () => (/* binding */ getHash)
+/* harmony export */   "getPathname": () => (/* binding */ getPathname)
 /* harmony export */ });
-var getHash = function (target) {
-    var href = (target || window).location.href;
-    return new URL(href).hash;
+var getPathname = function (target) {
+    if (target === void 0) { target = window; }
+    return target.location.pathname;
 };
 
 

@@ -26,23 +26,29 @@ export declare const ITEM: {
 };
 export declare const COIN: {
     readonly VALUES: readonly [10, 50, 100, 500];
+    readonly EMPTY_COINS: {
+        readonly 10: 0;
+        readonly 50: 0;
+        readonly 100: 0;
+        readonly 500: 0;
+    };
 };
 export declare const PAGES: {
     readonly LANDING: {
         readonly TITLE: "";
-        readonly PATH: "";
+        readonly PATH: "/";
     };
     readonly ITEM_MANAGEMENT: {
         readonly TITLE: "상품 관리";
-        readonly PATH: "#item-management";
+        readonly PATH: "/item-management";
     };
     readonly CHANGE_CHARGE: {
         readonly TITLE: "잔돈 충전";
-        readonly PATH: "#change-charge";
+        readonly PATH: "/change-charge";
     };
     readonly ITEM_PURCHASE: {
         readonly TITLE: "상품 구매";
-        readonly PATH: "#item-purchase";
+        readonly PATH: "/item-purchase";
     };
     readonly DEFAULT: {
         readonly TITLE: "";
