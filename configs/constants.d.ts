@@ -33,6 +33,25 @@ export declare const COIN: {
         readonly 500: 0;
     };
 };
+export declare const USER: {
+    readonly EMAIL: {
+        readonly LENGTH: {
+            readonly MAX: 40;
+        };
+    };
+    readonly NAME: {
+        readonly LENGTH: {
+            readonly MIN: 2;
+            readonly MAX: 6;
+        };
+    };
+    readonly PASSWORD: {
+        readonly LENGTH: {
+            readonly MIN: 8;
+            readonly MAX: 30;
+        };
+    };
+};
 export declare const PAGES: {
     readonly LANDING: {
         readonly TITLE: "";
@@ -50,8 +69,22 @@ export declare const PAGES: {
         readonly TITLE: "상품 구매";
         readonly PATH: "/item-purchase";
     };
+    readonly LOGIN: {
+        readonly PATH: "/login";
+    };
+    readonly SIGNUP: {
+        readonly PATH: "/signup";
+    };
+    readonly PROFILE: {
+        readonly PATH: "/profile";
+    };
     readonly DEFAULT: {
         readonly TITLE: "";
         readonly PATH: "*";
     };
+};
+export declare const REDICTION: {
+    readonly LANDING: "landing";
+    readonly LOGIN: "login";
+    readonly AUTHORIZED: "authorized";
 };

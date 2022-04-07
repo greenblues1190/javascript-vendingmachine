@@ -1,3 +1,4 @@
+import Domain from '../core/Domain';
 export interface Item {
     name: string;
     price: number;
@@ -12,18 +13,18 @@ export interface Coins {
 export interface VendingMachineState {
     items: Item[];
     coins: Coins;
-    location: string;
+    insertedMoney: number;
+    returnedChange: Coins;
 }
-export default class VendingMachine {
-    state: VendingMachineState;
-    constructor(items: Item[], coins: Coins, location?: string);
-    useStore(callback: Function): any;
+export default class VendingMachine extends Domain<VendingMachineState> {
     addItem(item: Item): void;
     updateItem(name: string, updatedItem: Item): void;
     removeItem(name: string): void;
+    purchaseItem(name: string): void;
     findItem(name: string): Item | null;
     addCoin(amount: number): void;
     getTotalMoney(): number;
-    setLocation(location: any): void;
+    insertMoney(amount: number): void;
+    returnChange(): void;
 }
 export declare const vendingMachine: VendingMachine;

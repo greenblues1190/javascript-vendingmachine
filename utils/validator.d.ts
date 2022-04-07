@@ -8,4 +8,7 @@ export declare const itemValidator: Validator;
 export declare const updatedItemValidator: Validator;
 export declare const removedItemValidator: Validator;
 export declare const amountValidator: Array<Condition>;
+export declare const insertMoneyValidator: Validator;
+export declare const purchaseItemValidator: Validator;
+export declare const returnChangeValidator: Validator;
 export {};
