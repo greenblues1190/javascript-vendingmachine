@@ -2132,7 +2132,7 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
     value: function setEvent() {
       this.addEvent('submit', '#update-profile-form', /*#__PURE__*/function () {
         var _ref = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default().mark(function _callee(event) {
-          var updatedProfile;
+          var updatedProfile, passwordConfirm;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default().wrap(function _callee$(_context) {
             while (1) {
               switch (_context.prev = _context.next) {
@@ -2142,25 +2142,35 @@ var ProfilePage = /*#__PURE__*/function (_Component) {
                     name: event.target.querySelector('[name="name"]').value,
                     password: event.target.querySelector('[name="password"]').value
                   };
-                  _context.prev = 2;
-                  _context.next = 5;
+                  passwordConfirm = event.target.querySelector('[name="password-confirm"]').value;
+                  _context.prev = 3;
+
+                  if (!(newUser.password !== passwordConfirm)) {
+                    _context.next = 6;
+                    break;
+                  }
+
+                  throw new Error('비밀번호가 다릅니다.');
+
+                case 6:
+                  _context.next = 8;
                   return _domains_Auth__WEBPACK_IMPORTED_MODULE_8__.auth.updateProfile(updatedProfile);
 
-                case 5:
-                  _context.next = 10;
+                case 8:
+                  _context.next = 13;
                   break;
 
-                case 7:
-                  _context.prev = 7;
-                  _context.t0 = _context["catch"](2);
+                case 10:
+                  _context.prev = 10;
+                  _context.t0 = _context["catch"](3);
                   document.querySelector('#snackbar').trigger(_context.t0.message);
 
-                case 10:
+                case 13:
                 case "end":
                   return _context.stop();
               }
             }
-          }, _callee, null, [[2, 7]]);
+          }, _callee, null, [[3, 10]]);
         }));
 
         return function (_x) {
@@ -2237,7 +2247,7 @@ var SignupPage = /*#__PURE__*/function (_Component) {
     value: function setEvent() {
       this.addEvent('submit', '#signup-form', /*#__PURE__*/function () {
         var _ref = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default().mark(function _callee(event) {
-          var newUser, state;
+          var newUser, passwordConfirm, state;
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default().wrap(function _callee$(_context) {
             while (1) {
               switch (_context.prev = _context.next) {
@@ -2248,30 +2258,40 @@ var SignupPage = /*#__PURE__*/function (_Component) {
                     name: event.target.querySelector('[name="name"]').value,
                     password: event.target.querySelector('[name="password"]').value
                   };
-                  _context.prev = 2;
-                  _context.next = 5;
+                  passwordConfirm = event.target.querySelector('[name="password-confirm"]').value;
+                  _context.prev = 3;
+
+                  if (!(newUser.password !== passwordConfirm)) {
+                    _context.next = 6;
+                    break;
+                  }
+
+                  throw new Error('비밀번호가 다릅니다.');
+
+                case 6:
+                  _context.next = 8;
                   return _domains_Auth__WEBPACK_IMPORTED_MODULE_8__.auth.signup(newUser);
 
-                case 5:
+                case 8:
                   state = {};
                   window.history.pushState(state, '', '/');
                   dispatchEvent(new PopStateEvent('popstate', {
                     state: state
                   }));
-                  _context.next = 13;
+                  _context.next = 16;
                   break;
 
-                case 10:
-                  _context.prev = 10;
-                  _context.t0 = _context["catch"](2);
+                case 13:
+                  _context.prev = 13;
+                  _context.t0 = _context["catch"](3);
                   document.querySelector('#snackbar').trigger(_context.t0.message);
 
-                case 13:
+                case 16:
                 case "end":
                   return _context.stop();
               }
             }
-          }, _callee, null, [[2, 10]]);
+          }, _callee, null, [[3, 13]]);
         }));
 
         return function (_x) {
