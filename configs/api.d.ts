@@ -1,1 +1,1 @@
-export declare const SERVER: "http://localhost:5000";
+export declare const SERVER: "https://vendingmachin-json-server-auth.herokuapp.com";

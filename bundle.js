@@ -1594,6 +1594,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core_Component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../core/Component */ "./src/core/Component.js");
 /* harmony import */ var _Link__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Link */ "./src/views/components/Link.js");
 /* harmony import */ var _domains_Auth__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../domains/Auth */ "./src/domains/Auth.ts");
+/* harmony import */ var _configs_constants__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../configs/constants */ "./src/configs/constants.ts");
 
 
 
@@ -1603,6 +1604,7 @@ __webpack_require__.r(__webpack_exports__);
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__["default"])(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0,_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__["default"])(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0,_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__["default"])(this, result); }; }
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
 
 
 
@@ -1622,16 +1624,11 @@ var UserMenu = /*#__PURE__*/function (_Component) {
   (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(UserMenu, [{
     key: "template",
     value: function template() {
-      var _auth$useStore = _domains_Auth__WEBPACK_IMPORTED_MODULE_7__.auth.useStore(function (state) {
-        return {
-          accessToken: state.accessToken,
-          user: state.user
-        };
-      }),
-          accessToken = _auth$useStore.accessToken,
-          user = _auth$useStore.user;
+      var user = _domains_Auth__WEBPACK_IMPORTED_MODULE_7__.auth.useStore(function (state) {
+        return state.user;
+      });
 
-      if (accessToken) {
+      if (user) {
         return "\n        <div class=\"thumbnail\">\n          <button id=\"user-thumbnail\" class=\"thumbnail styled-button\">".concat(user.name[0], "</button>\n          <ul id=\"user-menu\" class=\"dropdown-menu\">\n            <li><a-link id=\"profile-link\" href=\"/profile\">\uD68C\uC6D0 \uC815\uBCF4 \uC218\uC815</a-link></li>\n            <li><button id=\"logout-link\">\uB85C\uADF8\uC544\uC6C3</button></li>\n          </ul>\n        </div>\n      ");
       }
 
@@ -1648,7 +1645,7 @@ var UserMenu = /*#__PURE__*/function (_Component) {
       this.addEvent('click', '#logout-link', function () {
         _domains_Auth__WEBPACK_IMPORTED_MODULE_7__.auth.logout();
         var state = {};
-        window.history.pushState(state, '', '/');
+        window.history.pushState(state, '', _configs_constants__WEBPACK_IMPORTED_MODULE_8__.PAGES.LANDING.PATH);
         dispatchEvent(new PopStateEvent('popstate', {
           state: state
         }));
@@ -3804,7 +3801,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "SERVER": () => (/* binding */ SERVER)
 /* harmony export */ });
-var SERVER = 'http://localhost:5000';
+var SERVER = 'https://vendingmachin-json-server-auth.herokuapp.com';
 
 
 /***/ }),
