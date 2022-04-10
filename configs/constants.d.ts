@@ -55,32 +55,32 @@ export declare const USER: {
 export declare const PAGES: {
     readonly LANDING: {
         readonly TITLE: "";
-        readonly PATH: "/" | "/javascript-vendingmachine/";
+        readonly PATH: "/";
     };
     readonly ITEM_MANAGEMENT: {
         readonly TITLE: "상품 관리";
-        readonly PATH: "/item-management" | "/javascript-vendingmachine/item-management";
+        readonly PATH: "/item-management";
     };
     readonly CHANGE_CHARGE: {
         readonly TITLE: "잔돈 충전";
-        readonly PATH: "/change-charge" | "/javascript-vendingmachine/change-charge";
+        readonly PATH: "/change-charge";
     };
     readonly ITEM_PURCHASE: {
         readonly TITLE: "상품 구매";
-        readonly PATH: "/item-purchase" | "/javascript-vendingmachine/item-purchase";
+        readonly PATH: "/item-purchase";
     };
     readonly LOGIN: {
-        readonly PATH: "/login" | "/javascript-vendingmachine/login";
+        readonly PATH: "/login";
     };
     readonly SIGNUP: {
-        readonly PATH: "/signup" | "/javascript-vendingmachine/signup";
+        readonly PATH: "/signup";
     };
     readonly PROFILE: {
-        readonly PATH: "/profile" | "/javascript-vendingmachine/profile";
+        readonly PATH: "/profile";
     };
     readonly DEFAULT: {
         readonly TITLE: "";
-        readonly PATH: "/*" | "/javascript-vendingmachine/*";
+        readonly PATH: "/*";
     };
 };
 export declare const REDICTION: {
