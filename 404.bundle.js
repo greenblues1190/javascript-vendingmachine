@@ -1,0 +1,2 @@
+(()=>{var a=window.location;a.replace(a.protocol+"//"+a.hostname+(a.port?":"+a.port:"")+a.pathname.split("/").slice(0,1).join("/")+"/?/"+a.pathname.slice(1).split("/").slice(0).join("/").replace(/&/g,"~and~")+(a.search?"&"+a.search.slice(1).replace(/&/g,"~and~"):"")+a.hash)})();
+//# sourceMappingURL=404.bundle.js.map
