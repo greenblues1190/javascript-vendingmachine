@@ -14,7 +14,7 @@ declare type UserBody = {
 declare type AuthState = {
     [K in keyof UserBody]: UserBody[K] | null;
 };
-export default class Auth extends Domain<AuthState> {
+declare class Auth extends Domain<AuthState> {
     signup(newUser: SignupInfo): Promise<void>;
     login(loginInfo: LoginInfo): Promise<void>;
     logout(): void;

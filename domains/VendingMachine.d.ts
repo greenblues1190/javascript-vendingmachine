@@ -10,7 +10,7 @@ export interface Coins {
     100: number;
     500: number;
 }
-export interface VendingMachineState {
+interface VendingMachineState {
     items: Item[];
     coins: Coins;
     insertedMoney: number;
@@ -28,3 +28,4 @@ export default class VendingMachine extends Domain<VendingMachineState> {
     returnChange(): void;
 }
 export declare const vendingMachine: VendingMachine;
+export {};

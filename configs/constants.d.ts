@@ -4,6 +4,12 @@ export declare const CHARGE_AMOUNT: {
     readonly MAX: 100000;
     readonly STEP: 10;
 };
+export declare const INSERT_AMOUNT: {
+    LABEL: string;
+    MIN: number;
+    MAX: number;
+    STEP: number;
+};
 export declare const ITEM: {
     readonly NAME: {
         readonly LABEL: "상품명";
